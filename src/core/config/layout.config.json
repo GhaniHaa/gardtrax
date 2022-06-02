@@ -3,10 +3,10 @@
   "self": {
     "layout": "default",
     "logo": {
-      "dark": "media/logos/logo-light.png",
-      "light": "media/logos/logo-dark.png",
-      "brand": "media/logos/logo-light.png",
-      "green": "media/logos/logo-light.png"
+      "dark": "media/logos/logo_tdp.png",
+      "light": "media/logos/logo_tdp.png",
+      "brand": "media/logos/logo_tdp.png",
+      "green": "media/logos/logo_tdp.png"
     }
   },
   "loader": {

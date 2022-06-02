@@ -2,7 +2,7 @@
   <div
     class="v-application v-application--is-ltr theme--light menuable__content__active"
   >
-    <!--begin::Dashboard-->
+    <!--begin::Patrol-->
     <div class="row">
       <div class="col-xxl-3 col-12 col-md-3 pt-0 pb-0">
         <div class="card gutter-b">
@@ -25,34 +25,31 @@
           <b-button variant="primary" class="w-100">Export Excel</b-button>
         </div>
       </div>
-      <div class="col-xxl-3 col-12 col-md-3 pt-0 pb-0">
-        <div class="card gutter-b">
-          <b-button variant="primary" class="w-100"
-            >Export Detail to Excel</b-button
-          >
-        </div>
-      </div>
     </div>
     <div class="row">
       <div class="col-xxl-12">
-        <ve-table
-          :columns="columns"
-          :table-data="tableData"
-          :sort-option="sortOption"
-        />
-        <div class="table-pagination">
-          <ve-pagination
-            :total="totalCount"
-            :page-index="pageIndex"
-            :page-size="pageSize"
-            @on-page-number-change="pageNumberChange"
-            @on-page-size-change="pageSizeChange"
-            class="w-100"
+        <b-card>
+          <ve-table
+            :columns="columns"
+            :table-data="tableData"
+            :sort-option="sortOption"
+            :border-y="true"
+            :row-style-option="rowStyleOption"
           />
-        </div>
+          <div class="table-pagination">
+            <ve-pagination
+              :total="totalCount"
+              :page-index="pageIndex"
+              :page-size="pageSize"
+              @on-page-number-change="pageNumberChange"
+              @on-page-size-change="pageSizeChange"
+              class="w-100"
+            />
+          </div>
+        </b-card>
       </div>
     </div>
-    <!--end::Dashboard-->
+    <!--end::Patrol-->
   </div>
 </template>
 
@@ -60,7 +57,7 @@
 import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 let DB_DATA = [];
 export default {
-  name: "Attendance",
+  name: "Patrol",
   data() {
     return {
       filterPeriod: [
@@ -79,30 +76,66 @@ export default {
       ],
       selected: null,
       isLoading: false,
+      // Table
+      rowStyleOption: {
+        stripe: true,
+      },
       search: "",
       pageIndex: 1,
       pageSize: 10,
       sortOption: {
         sortChange: (params) => {
-          console.log("sortChange::", params);
           this.sortChange(params);
         },
       },
       columns: [
         {
-          field: "",
+          field: "customer",
           key: "a",
-          title: "#",
+          title: "Customer",
+          align: "left",
+          sortBy: "",
+        },
+        {
+          field: "tanggal",
+          key: "b",
+          title: "Tanggal",
+          align: "left",
+          sortBy: "",
+        },
+        {
+          field: "planPatrol",
+          key: "c",
+          title: "Plan Patrol",
+          align: "left",
+          sortBy: "",
+        },
+        {
+          field: "jumlahScan",
+          key: "d",
+          title: "Jumlah Scan",
+          align: "left",
+          sortBy: "",
+        },
+        {
+          field: "",
+          key: "e",
+          title: "Aksi",
           align: "center",
           // eslint-disable-next-line
-							renderBodyCell: ({ row, column, rowIndex }, h) => {
-            return (this.pageIndex - 1) * this.pageSize + rowIndex + 1;
+            renderBodyCell: ({ row, column, rowIndex }, h) => {
+            return (
+              <span on-click={() => this.handleView(row)}>
+                <b-button variant="success" class="py-1 px-2" id="detail">
+                  <i class="menu-icon flaticon-eye pr-0"></i>
+                </b-button>
+                <b-tooltip target="detail" triggers="hover">
+                  Detail
+                </b-tooltip>
+              </span>
+            );
           },
         },
-        { field: "name", key: "b", title: "Name", align: "center" },
-        { field: "date", key: "c", title: "Date", align: "left" },
-        { field: "hobby", key: "d", title: "Hobby", align: "left" },
-        { field: "address", key: "e", title: "Address", width: "" },
       ],
     };
   },
@@ -118,8 +151,8 @@ export default {
   },
   mounted() {
     this.$store.dispatch(SET_BREADCRUMB, [
-      { title: "Dashboard" },
-      { title: "Absensi" },
+      { title: "Dashboard", route: "/dashboard" },
+      { title: "Patroli" },
     ]);
   },
   created() {
@@ -127,23 +160,9 @@ export default {
   },
   methods: {
     sortChange(params) {
-      this.tableData.sort((a, b) => {
-        if (params.age) {
-          if (params.age === "asc") {
-            return a.age - b.age;
-          } else if (params.age === "desc") {
-            return b.age - a.age;
-          } else {
-            return 0;
-          }
-        } else if (params.weight) {
-          if (params.weight === "asc") {
-            return a.weight - b.weight;
-          } else if (params.weight === "desc") {
-            return b.weight - a.weight;
-          } else {
-            return 0;
-          }
+      Object.entries(params).forEach((item) => {
+        if (item[1]) {
+          console.log(item[0], item[1]);
         }
       });
     },
@@ -155,17 +174,20 @@ export default {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     },
+    handleView(item) {
+      this.$router.push({ path: `/report/patroli/detail/${item.id}/1122` });
+    },
     initDatabase() {
       DB_DATA = [];
       for (let i = 0; i < 1000; i++) {
         DB_DATA.push({
-          name: "John" + i,
-          date: "1900-05-20",
-          hobby: "coding and coding repeat" + i,
-          address: "No.1 Century Avenue, Shanghai" + i,
+          id: i,
+          customer: "Bank Indonesia",
+          tanggal: "29-05-2022",
+          planPatrol: 80,
+          jumlahScan: 20,
         });
       }
-      console.log("DB_DATA", DB_DATA);
     },
   },
 };

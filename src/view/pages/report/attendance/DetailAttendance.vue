@@ -2,30 +2,7 @@
   <div
     class="v-application v-application--is-ltr theme--light menuable__content__active"
   >
-    <!--begin::Incident-->
-    <div class="row">
-      <div class="col-xxl-3 col-12 col-md-3 pt-0 pb-0">
-        <div class="card gutter-b">
-          <b-form-select
-            v-model="selected"
-            :options="filterCustomer"
-          ></b-form-select>
-        </div>
-      </div>
-      <div class="col-xxl-3 col-12 col-md-3 pt-0 pb-0">
-        <div class="card gutter-b">
-          <b-form-select
-            v-model="selected"
-            :options="filterPeriod"
-          ></b-form-select>
-        </div>
-      </div>
-      <div class="col-xxl-3 col-12 col-md-3 pt-0 pb-0">
-        <div class="card gutter-b">
-          <b-button variant="primary" class="w-100">Export Excel</b-button>
-        </div>
-      </div>
-    </div>
+    <!--begin::Detail Attendance-->
     <div class="row">
       <div class="col-xxl-12">
         <b-card>
@@ -43,13 +20,14 @@
               :page-size="pageSize"
               @on-page-number-change="pageNumberChange"
               @on-page-size-change="pageSizeChange"
+              :border-y="true"
               class="w-100"
             />
           </div>
         </b-card>
       </div>
     </div>
-    <!--end::Incident-->
+    <!--end::Attendance-->
   </div>
 </template>
 
@@ -57,7 +35,7 @@
 import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 let DB_DATA = [];
 export default {
-  name: "Incident",
+  name: "DetailAttendance",
   data() {
     return {
       filterPeriod: [
@@ -90,81 +68,81 @@ export default {
       },
       columns: [
         {
-          field: "customer",
-          key: "a",
-          title: "Customer",
+          field: "nip",
+          key: "b",
+          title: "NIP",
           align: "left",
           sortBy: "",
         },
         {
           field: "petugas",
-          key: "C",
+          key: "c",
           title: "Petugas",
           align: "left",
           sortBy: "",
         },
         {
+          field: "customer",
+          key: "d",
+          title: "Customer",
+          align: "left",
+          sortBy: "",
+        },
+        {
           field: "tanggal",
-          key: "b",
+          key: "e",
           title: "Tanggal",
           align: "left",
-          sortBy: "",
-        },
-        { field: "jam", key: "d", title: "Jam", align: "left", sortBy: "" },
-        {
-          field: "lokasi",
-          key: "e",
-          title: "Lokasi",
-          align: "left",
+          width: "",
           sortBy: "",
         },
         {
-          field: "pihakTerkait",
+          field: "shift",
           key: "f",
-          title: "Pihak Terkait",
+          title: "Shift",
           align: "left",
+          width: "",
           sortBy: "",
-          width: "5%",
         },
         {
-          field: "langkah",
+          field: "checkIn",
           key: "g",
-          title: "Langkah",
+          title: "Check In",
           align: "left",
+          width: "",
           sortBy: "",
-          width: "20%",
         },
         {
-          field: "kronologis",
+          field: "checkOut",
           key: "h",
-          title: "Kronologis",
+          title: "Check Out",
           align: "left",
+          width: "",
           sortBy: "",
-          width: "20%",
         },
         {
-          field: "jenis",
+          field: "status",
           key: "i",
-          title: "Jenis",
+          title: "Status",
           align: "left",
+          width: "",
           sortBy: "",
         },
         {
-          field: "",
+          field: "pengganti",
           key: "j",
-          title: "Foto",
+          title: "Pengganti",
           align: "left",
+          width: "",
           sortBy: "",
-          width: "5%",
-          // eslint-disable-next-line
-          renderBodyCell: ({ row, column, rowIndex }, h) => {
-            return (
-              <img
-                src={row.foto}
-                style="width: 100%;object-fit: scale-down"
-              ></img>
-            );
-          },
+        },
+        {
+          field: "danru",
+          key: "k",
+          title: "Danru",
+          align: "left",
+          width: "",
+          sortBy: "",
         },
       ],
     };
@@ -182,7 +160,8 @@ export default {
   mounted() {
     this.$store.dispatch(SET_BREADCRUMB, [
       { title: "Dashboard", route: "/dashboard" },
-      { title: "Kejadian" },
+      { title: "Absensi", route: "/report" },
+      { title: "Laporan Detail Absensi" },
     ]);
   },
   created() {
@@ -204,25 +183,20 @@ export default {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     },
-    handleView(item) {
-      this.$router.push({ path: `/report/absensi/detail/${item.id}/1122` });
-    },
     initDatabase() {
       DB_DATA = [];
       for (let i = 0; i < 1000; i++) {
         DB_DATA.push({
-          id: i,
-          customer: "Bank Indonesia",
-          tanggal: "29-05-2022",
-          petugas: "Ferdian Abdurrasyid",
-          jam: "17:00:00",
-          lokasi: "Bank Indonesia",
-          pihakTerkait: "Ardiansyah",
-          langkah: "mengadministrasikan dokumen masuk dan dokumen keluar",
-          kronologis:
-            "Jl. Kebon Sirih No.82, RT.2/RW.3, Gambir, Kecamatan Gambir, Kota Jakarta Pusat, Daerah Khusus Ibukota Jakarta 10110, Indonesia",
-          jenis: "Lain-Lain",
-          foto: "https://gardtrax-admin.tdpindonesia.id/dist/img/logo_tdp.jpeg",
+          nip: "01207214399",
+          petugas: "ARIYANTO",
+          customer: "BANK INDONESIA",
+          tanggal: "01-06-2022",
+          shift: 1,
+          checkIn: "06:37:04",
+          checkOut: "06:37:04",
+          status: "Hadir",
+          pengganti: "",
+          danru: "",
         });
       }
     },

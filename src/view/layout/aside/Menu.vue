@@ -45,7 +45,7 @@
       data-menu-toggle="hover"
       class="menu-item menu-item-submenu"
       v-bind:class="{
-        'menu-item-open': hasActiveChildren('/custom-error/error'),
+        'menu-item-open': hasActiveChildren('/report'),
       }"
     >
       <a href="#" class="menu-link menu-toggle">
@@ -56,12 +56,6 @@
       <div class="menu-submenu">
         <span class="menu-arrow"></span>
         <ul class="menu-subnav">
-          <li aria-haspopup="true" class="menu-item menu-item-parent">
-            <span class="menu-link">
-              <span class="menu-text">Error Pages</span>
-            </span>
-          </li>
-
           <router-link
             to="/report/absensi"
             v-slot="{ href, navigate, isActive, isExactActive }"
@@ -146,6 +140,68 @@
                   <span></span>
                 </i>
                 <span class="menu-text">Patroli</span>
+              </a>
+            </li>
+          </router-link>
+        </ul>
+      </div>
+    </li>
+    <li
+      aria-haspopup="true"
+      data-menu-toggle="hover"
+      class="menu-item menu-item-submenu"
+      v-bind:class="{
+        'menu-item-open': hasActiveChildren('/employee'),
+      }"
+    >
+      <a href="#" class="menu-link menu-toggle">
+        <i class="menu-icon flaticon2-group"></i>
+        <span class="menu-text">Karyawan</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="menu-submenu">
+        <span class="menu-arrow"></span>
+        <ul class="menu-subnav">
+          <router-link
+            to="/employee/list"
+            v-slot="{ href, navigate, isActive, isExactActive }"
+          >
+            <li
+              aria-haspopup="true"
+              data-menu-toggle="hover"
+              class="menu-item"
+              :class="[
+                isActive && 'menu-item-active',
+                isExactActive && 'menu-item-active',
+              ]"
+            >
+              <a :href="href" class="menu-link" @click="navigate">
+                <i class="menu-bullet menu-bullet-dot">
+                  <span></span>
+                </i>
+                <span class="menu-text">Employee</span>
+              </a>
+            </li>
+          </router-link>
+
+          <router-link
+            to="/employee/import"
+            v-slot="{ href, navigate, isActive, isExactActive }"
+          >
+            <li
+              aria-haspopup="true"
+              data-menu-toggle="hover"
+              class="menu-item"
+              :class="[
+                isActive && 'menu-item-active',
+                isExactActive && 'menu-item-active',
+              ]"
+            >
+              <a :href="href" class="menu-link" @click="navigate">
+                <i class="menu-bullet menu-bullet-dot">
+                  <span></span>
+                </i>
+                <span class="menu-text">Import Employee</span>
               </a>
             </li>
           </router-link>
@@ -2128,6 +2184,51 @@
 <script>
 export default {
   name: "KTMenu",
+  data() {
+    return {
+      listMenu: [
+        {
+          name: "Dasboard",
+          route: "/dashboard",
+          icon: "menu-icon flaticon2-architecture-and-city",
+          children: [],
+        },
+        {
+          name: "Layout Builder",
+          route: "/builder",
+          icon: "menu-icon flaticon2-expand",
+          children: [],
+        },
+        {
+          name: "Report",
+          route: "",
+          icon: "menu-icon flaticon2-graph",
+          children: [
+            {
+              name: "Absensi",
+              route: "/report/absensi",
+              icon: "menu-bullet menu-bullet-dot",
+            },
+            {
+              name: "Harian",
+              route: "/report/harian",
+              icon: "menu-bullet menu-bullet-dot",
+            },
+            {
+              name: "Kejadian",
+              route: "/report/kejadian",
+              icon: "menu-bullet menu-bullet-dot",
+            },
+            {
+              name: "Patrol",
+              route: "/report/patroli",
+              icon: "menu-bullet menu-bullet-dot",
+            },
+          ],
+        },
+      ],
+    };
+  },
   methods: {
     hasActiveChildren(match) {
       return this.$route["path"].indexOf(match) !== -1;

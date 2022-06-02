@@ -159,6 +159,24 @@ export default {
 };
 </script>
 <style lang="scss">
+.ve-table
+  .ve-table-container
+  table.ve-table-content
+  thead.ve-table-header
+  .ve-table-header-tr
+  .ve-table-header-th
+  .ve-table-sort {
+  margin-left: 1px;
+  top: -5px;
+}
+.ve-table
+  .ve-table-container
+  table.ve-table-content
+  thead.ve-table-header
+  tr.ve-table-header-tr
+  th.ve-table-header-th:only-child {
+  display: flex;
+}
 .ve-pagination {
   margin: 0;
   padding: 16px 0;

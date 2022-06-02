@@ -28,23 +28,71 @@ export default new Router({
           children: [
             {
               path: "absensi",
-              name: "Attendance",
-              component: () => import("@/view/pages/report/Attendance.vue"),
+              name: "attendance",
+              component: () => import("@/view/pages/report/Index.vue"),
+              children: [
+                {
+                  path: "",
+                  name: "attendance-main",
+                  component: () =>
+                    import("@/view/pages/report/attendance/Attendance.vue"),
+                },
+                {
+                  path: "detail/:id/:date",
+                  name: "attendance-detail",
+                  component: () =>
+                    import(
+                      "@/view/pages/report/attendance/DetailAttendance.vue"
+                    ),
+                },
+              ],
             },
             {
               path: "harian",
-              name: "Daily",
+              name: "daily",
               component: () => import("@/view/pages/report/Daily.vue"),
             },
             {
               path: "kejadian",
-              name: "Incident",
+              name: "incident",
               component: () => import("@/view/pages/report/Incident.vue"),
             },
             {
               path: "patroli",
-              name: "Patrol",
-              component: () => import("@/view/pages/report/Patrol.vue"),
+              name: "patrol",
+              component: () => import("@/view/pages/report/Index.vue"),
+              children: [
+                {
+                  path: "",
+                  name: "patrol-main",
+                  component: () =>
+                    import("@/view/pages/report/patrol/Patrol.vue"),
+                },
+                {
+                  path: "detail/:id/:date",
+                  name: "patrol-detail",
+                  component: () =>
+                    import("@/view/pages/report/patrol/DetailPatrol.vue"),
+                },
+              ],
+            },
+          ],
+        },
+        {
+          path: "/employee",
+          redirect: "/employee/list",
+          name: "employee",
+          component: () => import("@/view/pages/employee/Index.vue"),
+          children: [
+            {
+              path: "list",
+              name: "employee-list",
+              component: () => import("@/view/pages/employee/List.vue"),
+            },
+            {
+              path: "import",
+              name: "employee-import",
+              component: () => import("@/view/pages/employee/Import.vue"),
             },
           ],
         },
