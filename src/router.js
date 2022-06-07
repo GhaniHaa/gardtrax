@@ -90,6 +90,54 @@ export default new Router({
               component: () => import("@/view/pages/employee/List.vue"),
             },
             {
+              path: "create",
+              name: "employee-create",
+              component: () => import("@/view/pages/employee/Employee.vue"),
+            },
+            {
+              path: "edit/:id",
+              name: "employee-edit",
+              component: () => import("@/view/pages/employee/Employee.vue"),
+            },
+            {
+              path: "view/:id",
+              name: "employee-view",
+              component: () => import("@/view/pages/employee/View.vue"),
+            },
+            {
+              path: "import",
+              name: "employee-import",
+              component: () => import("@/view/pages/employee/Import.vue"),
+            },
+          ],
+        },
+        {
+          path: "/customer",
+          redirect: "/customer/list",
+          name: "customer",
+          component: () => import("@/view/pages/customer/Index.vue"),
+          children: [
+            {
+              path: "list",
+              name: "employee-list",
+              component: () => import("@/view/pages/employee/List.vue"),
+            },
+            {
+              path: "create",
+              name: "employee-create",
+              component: () => import("@/view/pages/employee/Employee.vue"),
+            },
+            {
+              path: "edit/:id",
+              name: "employee-edit",
+              component: () => import("@/view/pages/employee/Employee.vue"),
+            },
+            {
+              path: "view/:id",
+              name: "employee-view",
+              component: () => import("@/view/pages/employee/View.vue"),
+            },
+            {
               path: "import",
               name: "employee-import",
               component: () => import("@/view/pages/employee/Import.vue"),

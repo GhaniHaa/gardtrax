@@ -5,6 +5,10 @@ export const getToken = () => {
 };
 
 export const saveToken = (token) => {
+  // let d = new Date();
+  // d.setTime(d.getTime() + 1 * 24 * 60 * 60 * 1000);
+  // let expires = "expires=" + d.toUTCString();
+  // this.$cookie.set("user_token", token, expires);
   window.localStorage.setItem(ID_TOKEN_KEY, token);
 };
 
