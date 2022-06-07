@@ -45,7 +45,9 @@
     <div class="row">
       <div class="col-xxl-12 col-12 col-md-12">
         <b-card>
-          <b-button variant="primary gutter-b">Tambah</b-button>
+          <b-button variant="primary gutter-b" @click="handleButtonAdd()"
+            >Tambah</b-button
+          >
           <b-form-group label-for="file-default">
             <ve-table
               :columns="columns"
@@ -77,7 +79,7 @@
 import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 let DB_DATA = [];
 export default {
-  name: "Attendance",
+  name: "ListEmployee",
   data() {
     return {
       filterPosition: [
@@ -171,16 +173,15 @@ export default {
           // eslint-disable-next-line
             renderBodyCell: ({ row, column, rowIndex }, h) => {
             return (
-              <span
-                on-click={() => {
-                  this.handleView(row);
-                }}
-              >
+              <span>
                 <b-button
                   variant="success"
                   class="py-1 px-2 mr-1"
                   id="detail"
                   title="edit"
+                  on-click={() => {
+                    this.handleEdit(row);
+                  }}
                 >
                   <i
                     class="menu-icon flaticon-edit pr-0"
@@ -192,6 +193,9 @@ export default {
                   class="py-1 px-2 mr-1"
                   id="detail"
                   title="delete"
+                  on-click={() => {
+                    this.handleView(row);
+                  }}
                 >
                   <i
                     class="menu-icon flaticon-delete pr-0"
@@ -203,6 +207,9 @@ export default {
                   class="py-1 px-2"
                   id="detail"
                   title="detail"
+                  on-click={() => {
+                    this.handleView(row);
+                  }}
                 >
                   <i
                     class="menu-icon flaticon-eye pr-0"
@@ -251,8 +258,14 @@ export default {
       this.pageIndex = 1;
       this.pageSize = pageSize;
     },
+    handleButtonAdd() {
+      this.$router.push({ path: `/employee/create` });
+    },
     handleView(item) {
-      this.$router.push({ path: `/report/absensi/detail/${item.id}/1122` });
+      this.$router.push({ path: `/employee/view/${item.id}` });
+    },
+    handleEdit(item) {
+      this.$router.push({ path: `/employee/edit/${item.id}` });
     },
     initDatabase() {
       DB_DATA = [];

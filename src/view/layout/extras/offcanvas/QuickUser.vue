@@ -35,55 +35,38 @@
         </div>
       </template>
 
-      <div class="navi navi-hover min-w-md-250px">
+      <div class="navi navi-hover min-w-md-300px">
         <b-dropdown-text tag="div" class="navi-header font-weight-bold">
-          Jump to:
-          <i
-            class="flaticon2-information"
-            data-toggle="tooltip"
-            data-placement="left"
-            v-b-tooltip.hover
-            title="Click to learn more..."
-          />
+          <h3 class="font-weight-bold m-0">User Profile</h3>
         </b-dropdown-text>
         <b-dropdown-text
           tag="div"
           class="navi-separator mb-3"
         ></b-dropdown-text>
         <b-dropdown-text tag="div" class="navi-item">
-          <a href="#" class="navi-link">
-            <span class="navi-icon">
-              <i class="flaticon2-drop"></i>
-            </span>
-            <span class="navi-text">Recent Orders</span>
-          </a>
-        </b-dropdown-text>
-        <b-dropdown-text tag="div" class="navi-item">
-          <a href="#" class="navi-link">
-            <span class="navi-icon">
-              <i class="flaticon2-calendar-8"></i>
-            </span>
-            <span class="navi-text">Support Cases</span>
-          </a>
-        </b-dropdown-text>
-        <b-dropdown-text tag="div" class="navi-item">
-          <a href="#" class="navi-link">
-            <span class="navi-icon">
-              <i class="flaticon2-telegram-logo"></i>
-            </span>
-            <span class="navi-text">Projects</span>
-          </a>
-        </b-dropdown-text>
-        <b-dropdown-text tag="div" class="navi-item">
-          <a href="#" class="navi-link">
-            <span class="navi-icon">
-              <i class="flaticon2-new-email"></i>
-            </span>
-            <span class="navi-text">Messages</span>
-            <span class="navi-label">
-              <span class="label label-success label-rounded">5</span>
-            </span>
-          </a>
+          <div class="d-flex align-items-center p-6">
+            <div
+              class="symbol symbol-60 symbol-xxl-100 mr-5 align-self-start align-self-xxl-center symbol-35 symbol-light-success"
+            >
+              <div class="symbol-label font-size-h5 font-weight-bold">J</div>
+            </div>
+            <div>
+              <a
+                href="#"
+                class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary"
+              >
+                James Jones
+              </a>
+              <div class="text-muted">Application Developer</div>
+              <div class="mt-2">
+                <a
+                  href="#"
+                  class="btn btn-sm btn-primary font-weight-bold mr-2 py-2 px-3 px-xxl-5 my-1"
+                  >Profile</a
+                >
+              </div>
+            </div>
+          </div>
         </b-dropdown-text>
         <b-dropdown-text
           tag="div"
@@ -91,16 +74,7 @@
         ></b-dropdown-text>
         <b-dropdown-text tag="div" class="navi-footer">
           <a class="btn btn-light-primary font-weight-bolder btn-sm" href="#"
-            >Upgrade plan</a
-          >
-          <a
-            class="btn btn-clean font-weight-bold btn-sm"
-            href="#"
-            data-toggle="tooltip"
-            data-placement="left"
-            v-b-tooltip.hover
-            title="Click to learn more..."
-            >Learn more</a
+            >Logout</a
           >
         </b-dropdown-text>
       </div>
@@ -171,7 +145,7 @@ export default {
     },
   },
   computed: {
-    ...mapGetters(["currentUserPersonalInfo"]),
+    ...mapGetters(["currentUserPersonalInfo", "currentUserPhoto"]),
 
     getFullName() {
       return (
