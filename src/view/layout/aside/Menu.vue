@@ -40,6 +40,11 @@
       </li>
     </router-link>
 
+    <li class="menu-section">
+      <h4 class="menu-text">General</h4>
+      <i class="menu-icon flaticon-more-v2"></i>
+    </li>
+
     <li
       aria-haspopup="true"
       data-menu-toggle="hover"
@@ -146,6 +151,11 @@
         </ul>
       </div>
     </li>
+
+    <li class="menu-section">
+      <h4 class="menu-text">Manage</h4>
+      <i class="menu-icon flaticon-more-v2"></i>
+    </li>
     <li
       aria-haspopup="true"
       data-menu-toggle="hover"
@@ -208,6 +218,110 @@
         </ul>
       </div>
     </li>
+    <li
+      aria-haspopup="true"
+      data-menu-toggle="hover"
+      class="menu-item menu-item-submenu"
+      v-bind:class="{
+        'menu-item-open': hasActiveChildren('/customer'),
+      }"
+    >
+      <a href="#" class="menu-link menu-toggle">
+        <i class="menu-icon flaticon2-soft-icons-1"></i>
+        <span class="menu-text">Customer</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="menu-submenu">
+        <span class="menu-arrow"></span>
+        <ul class="menu-subnav">
+          <router-link
+            to="/customer/list"
+            v-slot="{ href, navigate, isActive, isExactActive }"
+          >
+            <li
+              aria-haspopup="true"
+              data-menu-toggle="hover"
+              class="menu-item"
+              :class="[
+                isActive && 'menu-item-active',
+                isExactActive && 'menu-item-active',
+              ]"
+            >
+              <a :href="href" class="menu-link" @click="navigate">
+                <i class="menu-bullet menu-bullet-dot">
+                  <span></span>
+                </i>
+                <span class="menu-text">Customer</span>
+              </a>
+            </li>
+          </router-link>
+
+          <router-link
+            to="/customer/qr-code"
+            v-slot="{ href, navigate, isActive, isExactActive }"
+          >
+            <li
+              aria-haspopup="true"
+              data-menu-toggle="hover"
+              class="menu-item"
+              :class="[
+                isActive && 'menu-item-active',
+                isExactActive && 'menu-item-active',
+              ]"
+            >
+              <a :href="href" class="menu-link" @click="navigate">
+                <i class="menu-bullet menu-bullet-dot">
+                  <span></span>
+                </i>
+                <span class="menu-text">Generate QR Code</span>
+              </a>
+            </li>
+          </router-link>
+        </ul>
+      </div>
+    </li>
+    <router-link
+      to="/brodcast"
+      v-slot="{ href, navigate, isActive, isExactActive }"
+    >
+      <li
+        aria-haspopup="true"
+        data-menu-toggle="hover"
+        class="menu-item"
+        :class="[
+          isActive && 'menu-item-active',
+          isExactActive && 'menu-item-active',
+        ]"
+      >
+        <a :href="href" class="menu-link" @click="navigate">
+          <i class="menu-icon flaticon2-speaker"></i>
+          <span class="menu-text">Brodcast Message</span>
+        </a>
+      </li>
+    </router-link>
+    <li class="menu-section">
+      <h4 class="menu-text">Admin</h4>
+      <i class="menu-icon flaticon-more-v2"></i>
+    </li>
+    <router-link
+      to="/user"
+      v-slot="{ href, navigate, isActive, isExactActive }"
+    >
+      <li
+        aria-haspopup="true"
+        data-menu-toggle="hover"
+        class="menu-item"
+        :class="[
+          isActive && 'menu-item-active',
+          isExactActive && 'menu-item-active',
+        ]"
+      >
+        <a :href="href" class="menu-link" @click="navigate">
+          <i class="menu-icon flaticon-user-add"></i>
+          <span class="menu-text">User</span>
+        </a>
+      </li>
+    </router-link>
 
     <li class="menu-section">
       <h4 class="menu-text">Components</h4>
