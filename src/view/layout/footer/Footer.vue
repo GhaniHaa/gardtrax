@@ -6,10 +6,10 @@
       v-bind:class="{ 'container-fluid': widthFluid, container: !widthFluid }"
     >
       <div class="text-dark">
-        <span class="font-weight-bold mr-2"> PT Trans Dana Profitri </span>
+        <span class="font-weight-bold mr-2">  </span>
       </div>
       <div class="nav nav-dark">
-        TDP Guard Management System - 2019 All right Reserved
+        Gardtrax
       </div>
     </div>
   </div>
