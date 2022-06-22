@@ -36,6 +36,22 @@
     <div class="row">
       <div class="col-xxl-12">
         <b-card>
+          <b-table hover :items="tableData" :fields="columns">
+            <template #cell(action)="row">
+              <span @click="handleView(row.item)">
+                <b-button
+                  variant="success"
+                  class="py-1 px-2"
+                  id="detail"
+                  title="detail"
+                >
+                  <i class="menu-icon flaticon-eye pr-0"></i>
+                </b-button>
+              </span>
+            </template>
+          </b-table>
+        </b-card>
+        <!-- <b-card>
           <ve-table
             :columns="columns"
             :table-data="tableData"
@@ -54,7 +70,7 @@
               class="w-100"
             />
           </div>
-        </b-card>
+        </b-card> -->
       </div>
     </div>
     <!--end::Attendance-->
@@ -98,106 +114,114 @@ export default {
       },
       columns: [
         {
-          field: "customer",
-          key: "b",
-          title: "Customer",
+          key: "customer",
+          // key: "b",
+          label: "Customer",
+          align: "left",
+          sortBy: "",
+          sortable: true,
+        },
+        {
+          key: "date",
+          // key: "c",
+          label: "Tanggal",
           align: "left",
           sortBy: "",
         },
         {
-          field: "date",
-          key: "c",
-          title: "Tanggal",
+          key: "shift",
+          // key: "d",
+          label: "Shift",
           align: "left",
           sortBy: "",
         },
-        { field: "shift", key: "d", title: "Shift", align: "left", sortBy: "" },
         {
-          field: "mustPresent",
-          key: "e",
-          title: "Harus Hadir",
+          key: "mustPresent",
+          // key: "e",
+          label: "Harus Hadir",
+          align: "left",
+          width: "",
+          sortBy: "",
+          sortable: true,
+        },
+        {
+          key: "actualPresent",
+          // key: "f",
+          label: "Aktual Hadir",
           align: "left",
           width: "",
           sortBy: "",
         },
         {
-          field: "actualPresent",
-          key: "f",
-          title: "Aktual Hadir",
+          key: "notPresenet",
+          // key: "g",
+          label: "Tidak Hadir",
           align: "left",
           width: "",
           sortBy: "",
         },
         {
-          field: "notPresenet",
-          key: "g",
-          title: "Tidak Hadir",
+          key: "permit",
+          // key: "h",
+          label: "Izin",
           align: "left",
           width: "",
           sortBy: "",
         },
         {
-          field: "permit",
-          key: "h",
-          title: "Izin",
+          key: "sick",
+          // key: "i",
+          label: "Sakit",
           align: "left",
           width: "",
           sortBy: "",
         },
         {
-          field: "sick",
-          key: "i",
-          title: "Sakit",
+          key: "withoutExplanation",
+          // key: "j",
+          label: "Tanpa Keterangan",
           align: "left",
           width: "",
           sortBy: "",
         },
         {
-          field: "withoutExplanation",
-          key: "j",
-          title: "Tanpa Keterangan",
+          key: "paidLeave",
+          // key: "k",
+          label: "Cuti",
           align: "left",
           width: "",
           sortBy: "",
         },
         {
-          field: "paidLeave",
-          key: "k",
-          title: "Cuti",
+          key: "replacement",
+          // key: "l",
+          label: "Pengganti",
           align: "left",
           width: "",
           sortBy: "",
         },
         {
-          field: "replacement",
-          key: "l",
-          title: "Pengganti",
-          align: "left",
-          width: "",
-          sortBy: "",
-        },
-        {
-          field: "",
-          key: "m",
-          title: "Aksi",
+          key: "action",
+          // key: "m",
+          label: "Aksi",
           align: "center",
           // eslint-disable-next-line
-            renderBodyCell: ({ row, column, rowIndex }, h) => {
-            return (
-              <span
-                on-click={() => {
-                  this.handleView(row);
-                }}
-              >
-                <b-button variant="success" class="py-1 px-2" id="detail">
-                  <i class="menu-icon flaticon-eye pr-0"></i>
-                </b-button>
-                <b-tooltip ref="tooltip" target="detail" triggers="hover">
-                  Detail
-                </b-tooltip>
-              </span>
-            );
-          },
+          //   renderBodyCell: ({ row, column, rowIndex }, h) => {
+          //   return (
+          //     <span
+          //       on-click={() => {
+          //         this.handleView(row);
+          //       }}
+          //     >
+          //       <b-button variant="success" class="py-1 px-2" id="detail">
+          //         <i class="menu-icon flaticon-eye pr-0"></i>
+          //       </b-button>
+          //       <b-tooltip ref="tooltip" target="detail" triggers="hover">
+          //         Detail
+          //       </b-tooltip>
+          //     </span>
+          //   );
+          // },
         },
       ],
     };
@@ -245,7 +269,7 @@ export default {
       for (let i = 0; i < 1000; i++) {
         DB_DATA.push({
           id: i,
-          customer: "Bank Indonesia",
+          customer: "Bank Indonesia" + i,
           date: "1900-05-20",
           shift: 1,
           mustPresent: "1",

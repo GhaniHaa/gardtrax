@@ -119,28 +119,85 @@ export default new Router({
           children: [
             {
               path: "list",
-              name: "employee-list",
-              component: () => import("@/view/pages/employee/List.vue"),
+              name: "customer-list",
+              component: () => import("@/view/pages/customer/List.vue"),
             },
             {
               path: "create",
-              name: "employee-create",
-              component: () => import("@/view/pages/employee/Employee.vue"),
+              name: "customer-create",
+              component: () => import("@/view/pages/customer/Customer.vue"),
             },
             {
               path: "edit/:id",
-              name: "employee-edit",
-              component: () => import("@/view/pages/employee/Employee.vue"),
+              name: "customer-edit",
+              component: () => import("@/view/pages/customer/Customer.vue"),
             },
             {
-              path: "view/:id",
-              name: "employee-view",
-              component: () => import("@/view/pages/employee/View.vue"),
+              path: "qr-code",
+              name: "customer-qr-code",
+              redirect: "/customer/qr-code/list",
+              component: () => import("@/view/pages/customer/Index.vue"),
+              children: [
+                {
+                  path: "list",
+                  name: "qr-code-create",
+                  component: () =>
+                    import("@/view/pages/customer/QRCode/List.vue"),
+                },
+                {
+                  path: "edit/:id",
+                  name: "qr-code-edit",
+                  component: () =>
+                    import("@/view/pages/customer/QRCode/QRCode.vue"),
+                },
+                {
+                  path: "view/:id",
+                  name: "qr-code-view",
+                  component: () =>
+                    import("@/view/pages/customer/QRCode/View.vue"),
+                },
+              ],
+            },
+          ],
+        },
+        {
+          path: "/brodcast",
+          redirect: "/brodcast/list",
+          name: "brodcast",
+          component: () => import("@/view/pages/brodcast/Index.vue"),
+          children: [
+            {
+              path: "list",
+              name: "brodcast-list",
+              component: () => import("@/view/pages/brodcast/List.vue"),
             },
             {
-              path: "import",
-              name: "employee-import",
-              component: () => import("@/view/pages/employee/Import.vue"),
+              path: "create",
+              name: "brodcast-create",
+              component: () => import("@/view/pages/brodcast/Create.vue"),
+            },
+          ],
+        },
+        {
+          path: "/user",
+          redirect: "/user/list",
+          name: "user",
+          component: () => import("@/view/pages/user/Index.vue"),
+          children: [
+            {
+              path: "list",
+              name: "user-list",
+              component: () => import("@/view/pages/user/List.vue"),
+            },
+            {
+              path: "create",
+              name: "user-create",
+              component: () => import("@/view/pages/user/User.vue"),
+            },
+            {
+              path: "edit/:id",
+              name: "user-edit",
+              component: () => import("@/view/pages/user/User.vue"),
             },
           ],
         },

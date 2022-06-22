@@ -440,7 +440,7 @@ export default {
         { value: "konghucu", text: "Kong Hu Cu" },
       ],
       optionDivisi: [
-        { value: "", text: "Pilih shift" },
+        { value: "", text: "Pilih divisi" },
         { value: "marketing", text: "Marketing" },
         { value: "operational", text: "Operational" },
       ],

@@ -1,4 +1,4 @@
-# metronic-vue
+# Gardtrax
 
 ## Project setup
 ```
