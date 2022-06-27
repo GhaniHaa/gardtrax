@@ -202,6 +202,212 @@ export default new Router({
           ],
         },
         {
+          path: "/master",
+          redirect: "/master/service",
+          name: "master",
+          component: () => import("@/view/pages/master/Index.vue"),
+          children: [
+            {
+              path: "service",
+              name: "master-service",
+              component: () => import("@/view/pages/master/Index.vue"),
+              children: [
+                {
+                  path: "",
+                  name: "master-service-main",
+                  component: () =>
+                    import("@/view/pages/master/service/View.vue"),
+                },
+                {
+                  path: "create",
+                  name: "master-service-create",
+                  component: () =>
+                    import("@/view/pages/master/service/Create.vue"),
+                },
+                {
+                  path: "edit/:id",
+                  name: "master-service-edit",
+                  component: () =>
+                    import("@/view/pages/master/service/Edit.vue"),
+                },
+              ],
+            },
+            {
+              path: "bank",
+              name: "master-bank",
+              component: () => import("@/view/pages/master/Index.vue"),
+              children: [
+                {
+                  path: "",
+                  name: "master-bank-main",
+                  component: () => import("@/view/pages/master/bank/View.vue"),
+                },
+                {
+                  path: "create",
+                  name: "master-bank-create",
+                  component: () =>
+                    import("@/view/pages/master/bank/Create.vue"),
+                },
+                {
+                  path: "edit/:id",
+                  name: "master-bank-edit",
+                  component: () => import("@/view/pages/master/bank/Edit.vue"),
+                },
+              ],
+            },
+            {
+              path: "lvl-jabatan",
+              name: "master-lvl-jabatan",
+              component: () => import("@/view/pages/master/Index.vue"),
+              children: [
+                {
+                  path: "",
+                  name: "master-lvl-jabatan-main",
+                  component: () =>
+                    import("@/view/pages/master/lvl-jabatan/View.vue"),
+                },
+                {
+                  path: "create",
+                  name: "master-lvl-jabatan-create",
+                  component: () =>
+                    import("@/view/pages/master/lvl-jabatan/Create.vue"),
+                },
+                {
+                  path: "edit/:id",
+                  name: "master-lvl-jabatan-edit",
+                  component: () =>
+                    import("@/view/pages/master/lvl-jabatan/Edit.vue"),
+                },
+              ],
+            },
+            {
+              path: "jabatan",
+              name: "master-jabatan",
+              component: () => import("@/view/pages/master/Index.vue"),
+              children: [
+                {
+                  path: "",
+                  name: "master-jabatan-main",
+                  component: () =>
+                    import("@/view/pages/master/jabatan/View.vue"),
+                },
+                {
+                  path: "create",
+                  name: "master-jabatan-create",
+                  component: () =>
+                    import("@/view/pages/master/jabatan/Create.vue"),
+                },
+                {
+                  path: "edit/:id",
+                  name: "master-jabatan-edit",
+                  component: () =>
+                    import("@/view/pages/master/jabatan/Edit.vue"),
+                },
+              ],
+            },
+            {
+              path: "divisi",
+              name: "master-divisi",
+              component: () => import("@/view/pages/master/Index.vue"),
+              children: [
+                {
+                  path: "",
+                  name: "master-divisi-main",
+                  component: () =>
+                    import("@/view/pages/master/divisi/View.vue"),
+                },
+                {
+                  path: "create",
+                  name: "master-divisi-create",
+                  component: () =>
+                    import("@/view/pages/master/divisi/Create.vue"),
+                },
+                {
+                  path: "edit/:id",
+                  name: "master-divisi-edit",
+                  component: () =>
+                    import("@/view/pages/master/divisi/Edit.vue"),
+                },
+              ],
+            },
+            {
+              path: "inisiasi",
+              name: "master-inisiasi",
+              component: () => import("@/view/pages/master/Index.vue"),
+              children: [
+                {
+                  path: "",
+                  name: "master-inisiasi-main",
+                  component: () =>
+                    import("@/view/pages/master/inisiasi/View.vue"),
+                },
+                {
+                  path: "create",
+                  name: "master-inisiasi-create",
+                  component: () =>
+                    import("@/view/pages/master/inisiasi/Create.vue"),
+                },
+                {
+                  path: "edit/:id",
+                  name: "master-inisiasi-edit",
+                  component: () =>
+                    import("@/view/pages/master/inisiasi/Edit.vue"),
+                },
+              ],
+            },
+            {
+              path: "cabang",
+              name: "master-cabang",
+              component: () => import("@/view/pages/master/Index.vue"),
+              children: [
+                {
+                  path: "",
+                  name: "master-cabang-main",
+                  component: () =>
+                    import("@/view/pages/master/cabang/View.vue"),
+                },
+                {
+                  path: "create",
+                  name: "master-cabang-create",
+                  component: () =>
+                    import("@/view/pages/master/cabang/Create.vue"),
+                },
+                {
+                  path: "edit/:id",
+                  name: "master-cabang-edit",
+                  component: () =>
+                    import("@/view/pages/master/cabang/Edit.vue"),
+                },
+              ],
+            },
+            {
+              path: "site-group",
+              name: "master-site-group",
+              component: () => import("@/view/pages/master/Index.vue"),
+              children: [
+                {
+                  path: "",
+                  name: "master-site-group-main",
+                  component: () =>
+                    import("@/view/pages/master/site-group/View.vue"),
+                },
+                {
+                  path: "create",
+                  name: "master-site-group-create",
+                  component: () =>
+                    import("@/view/pages/master/site-group/Create.vue"),
+                },
+                {
+                  path: "edit/:id",
+                  name: "master-site-group-edit",
+                  component: () =>
+                    import("@/view/pages/master/site-group/Edit.vue"),
+                },
+              ],
+            },
+          ],
+        },
+        {
           path: "/vue-bootstrap",
           name: "vue-bootstrap",
           component: () =>

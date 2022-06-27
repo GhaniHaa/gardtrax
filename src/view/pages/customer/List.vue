@@ -189,7 +189,7 @@ export default {
   mounted() {
     this.$store.dispatch(SET_BREADCRUMB, [
       { title: "Dashboard", route: "/dashboard" },
-      { title: "Employee" },
+      { title: "Customer" },
     ]);
   },
   created() {

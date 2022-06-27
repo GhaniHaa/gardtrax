@@ -313,7 +313,7 @@
     >
       <a href="#" class="menu-link menu-toggle">
         <i class="menu-icon flaticon-folder-1"></i>
-        <span class="menu-text">Master (belum)</span>
+        <span class="menu-text">Master</span>
         <i class="menu-arrow"></i>
       </a>
       <div class="menu-submenu">
@@ -422,27 +422,6 @@
                   <span></span>
                 </i>
                 <span class="menu-text">Divisi</span>
-              </a>
-            </li>
-          </router-link>
-          <router-link
-            to="/master/inisiasi"
-            v-slot="{ href, navigate, isActive, isExactActive }"
-          >
-            <li
-              aria-haspopup="true"
-              data-menu-toggle="hover"
-              class="menu-item"
-              :class="[
-                isActive && 'menu-item-active',
-                isExactActive && 'menu-item-active',
-              ]"
-            >
-              <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot">
-                  <span></span>
-                </i>
-                <span class="menu-text">Inisiasi</span>
               </a>
             </li>
           </router-link>
