@@ -6,11 +6,9 @@
       v-bind:class="{ 'container-fluid': widthFluid, container: !widthFluid }"
     >
       <div class="text-dark">
-        <span class="font-weight-bold mr-2">  </span>
+        <span class="font-weight-bold mr-2"> </span>
       </div>
-      <div class="nav nav-dark">
-        Gardtrax
-      </div>
+      <div class="nav nav-dark">Gardtrax</div>
     </div>
   </div>
   <!-- end:: Footer -->
