@@ -183,44 +183,9 @@ export default {
           sortBy: "",
         },
         {
-          key: "",
+          key: "action",
           label: "Aksi",
-          align: "center",
-          // eslint-disable-next-line
-            renderBodyCell: ({ row, column, rowIndex }, h) => {
-            return (
-              <span>
-                <b-button
-                  variant="success"
-                  class="py-1 px-2 mr-1"
-                  id="detail"
-                  title="edit"
-                  on-click={() => {
-                    this.handleEdit(row);
-                  }}
-                >
-                  <i
-                    class="menu-icon flaticon-edit pr-0"
-                    style="font-size: 13px"
-                  ></i>
-                </b-button>
-                <b-button
-                  variant="danger"
-                  class="py-1 px-2 mr-1"
-                  id="detail"
-                  title="delete"
-                  on-click={() => {
-                    this.handleView(row);
-                  }}
-                >
-                  <i
-                    class="menu-icon flaticon-delete pr-0"
-                    style="font-size: 13px"
-                  ></i>
-                </b-button>
-              </span>
-            );
-          },
+          align: "center"
         },
       ],
     };
