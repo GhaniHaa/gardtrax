@@ -133,6 +133,32 @@ export default new Router({
               component: () => import("@/view/pages/customer/Customer.vue"),
             },
             {
+              path: "branch",
+              name: "branch",
+              redirect: "/customer/branch/list",
+              component: () => import("@/view/pages/customer/Index.vue"),
+              children: [
+                {
+                  path: "list",
+                  name: "customer-branch-list",
+                  component: () =>
+                    import("@/view/pages/customer/branch/List.vue"),
+                },
+                {
+                  path: "create",
+                  name: "customer-branch-create",
+                  component: () => 
+                    import("@/view/pages/customer/branch/Branch.vue"),
+                },
+                {
+                  path: "edit/:id",
+                  name: "customer-branch-edit",
+                  component: () =>
+                    import("@/view/pages/customer/branch/Branch.vue"),
+                },
+              ],
+            },
+            {
               path: "qr-code",
               name: "customer-qr-code",
               redirect: "/customer/qr-code/list",
@@ -160,6 +186,7 @@ export default new Router({
             },
           ],
         },
+        
         {
           path: "/brodcast",
           redirect: "/brodcast/list",
