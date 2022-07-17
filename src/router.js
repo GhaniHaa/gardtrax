@@ -147,7 +147,7 @@ export default new Router({
                 {
                   path: "create",
                   name: "customer-branch-create",
-                  component: () => 
+                  component: () =>
                     import("@/view/pages/customer/branch/Branch.vue"),
                 },
                 {
@@ -186,7 +186,7 @@ export default new Router({
             },
           ],
         },
-        
+
         {
           path: "/brodcast",
           redirect: "/brodcast/list",

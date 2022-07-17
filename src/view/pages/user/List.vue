@@ -4,10 +4,7 @@
   >
     <b-row class="mb-4">
       <b-col lg="4" class="my-1">
-        <b-form-group
-          class="mb-0"
-          v-slot="{ ariaDescribedby }"
-        >
+        <b-form-group class="mb-0" v-slot="{ ariaDescribedby }">
           <b-input-group size="sm">
             <b-form-select
               id="sort-by-select"
@@ -137,21 +134,21 @@ export default {
           sortBy: "",
           sortByFormatted: true,
           filterByFormatted: true,
-          sortable: true
+          sortable: true,
         },
         {
           key: "username",
           label: "Username",
           align: "left",
           sortBy: "",
-          sortable: true
+          sortable: true,
         },
         {
           key: "email",
           label: "Email",
           align: "left",
           sortBy: "",
-          sortable: true
+          sortable: true,
         },
         {
           key: "action",
@@ -160,9 +157,9 @@ export default {
           width: "10%",
         },
       ],
-      sortBy: '',
+      sortBy: "",
       sortDesc: false,
-      sortDirection: 'asc',
+      sortDirection: "asc",
       filter: null,
       filterOn: [],
     };
@@ -178,11 +175,11 @@ export default {
     },
     sortOptions() {
       return this.fields
-        .filter(f => f.sortable)
-        .map(f => {
-          return { text: f.label, value: f.key }
-        })
-    }
+        .filter((f) => f.sortable)
+        .map((f) => {
+          return { text: f.label, value: f.key };
+        });
+    },
   },
   mounted() {
     this.totalRows = this.tableData.length;
@@ -229,9 +226,9 @@ export default {
     },
     onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
-      this.totalRows = filteredItems.length
-      this.currentPage = 1
-    }
+      this.totalRows = filteredItems.length;
+      this.currentPage = 1;
+    },
   },
 };
 </script>

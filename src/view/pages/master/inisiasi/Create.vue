@@ -41,13 +41,13 @@ export default {
       selected: null,
       inisiasi: {
         nama: "",
-        jenis: ""
+        jenis: "",
       },
       optionJenis: [
         { value: "", text: "Pilih Jenis Inisiasi" },
         { value: "lelang", text: "Lelang" },
         { value: "canvas", text: "Canvas" },
-      ]
+      ],
     };
   },
   components: {},
