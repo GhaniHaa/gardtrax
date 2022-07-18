@@ -9,20 +9,76 @@
           <b-button variant="primary gutter-b" @click="handleButtonAdd()"
             >Tambah</b-button
           >
-          <b-table hover :items="tableData" :fields="columns">
+          <div class="row justify-content-between">
+            <div class="col-md-1">
+              <b-form-group class="mb-0">
+                <b-form-select
+                  id="per-page-select"
+                  v-model="perPage"
+                  :options="pageOptions"
+                  size="sm"
+                ></b-form-select>
+              </b-form-group>
+            </div>
+            <div class="col-md-3">
+              <b-form-group class="mb-0">
+                <b-input-group>
+                  <template #prepend>
+                    <b-input-group-text>
+                      <i class="menu-icon flaticon-search"></i>
+                    </b-input-group-text>
+                  </template>
+                  <b-form-input
+                    v-model="search"
+                    placeholder="Search"
+                  ></b-form-input>
+                </b-input-group>
+              </b-form-group>
+            </div>
+          </div>
+          <b-table
+            hover
+            :items="tableData"
+            :fields="columns"
+            :per-page="perPage"
+            :current-page="currentPage"
+          >
             <template #cell(action)="row">
-              <span @click="handleView(row.item)">
+              <span class="mr-2" @click="handleEdit(row.item)">
                 <b-button
                   variant="success"
                   class="py-1 px-2"
                   id="detail"
                   title="detail"
                 >
-                  <i class="menu-icon flaticon-eye pr-0"></i>
+                  <i class="menu-icon flaticon-edit pr-0"></i>
+                </b-button>
+              </span>
+              <span @click="handleDelete(row.item)">
+                <b-button
+                  variant="danger"
+                  class="py-1 px-2"
+                  id="detail"
+                  title="detail"
+                >
+                  <i class="menu-icon flaticon-delete pr-0"></i>
                 </b-button>
               </span>
             </template>
           </b-table>
+          <div class="row justify-content-end">
+            <div class="col-md-3">
+              <b-pagination
+                v-model="currentPage"
+                :total-rows="totalRows"
+                :per-page="perPage"
+                size="md"
+                align="fill"
+                class="ml-auto"
+                style="padding: 0"
+              ></b-pagination>
+            </div>
+          </div>
         </b-card>
       </div>
     </div>
@@ -45,7 +101,12 @@ export default {
       },
       search: "",
       pageIndex: 1,
+      //
+      totalRows: 10,
+      currentPage: 1,
       pageSize: 10,
+      perPage: 10,
+      pageOptions: [10, 15, { value: 100, text: "Show a lot" }],
       sortOption: {
         sortChange: (params) => {
           this.sortChange(params);
@@ -76,14 +137,14 @@ export default {
   components: {},
   computed: {
     tableData() {
-      const { pageIndex, pageSize } = this;
-      return DB_DATA.slice((pageIndex - 1) * pageSize, pageIndex * pageSize);
+      return DB_DATA
     },
     totalCount() {
       return DB_DATA.length;
     },
   },
   mounted() {
+    this.totalRows = this.tableData.length;
     this.$store.dispatch(SET_BREADCRUMB, [
       { title: "Dashboard", route: "/dashboard" },
       { title: "Brodcast" },

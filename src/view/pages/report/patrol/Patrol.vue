@@ -27,24 +27,67 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-xxl-12">
+      <div class="col-xxl-12 col-12 col-md-12">
         <b-card>
-          <ve-table
-            :columns="columns"
-            :table-data="tableData"
-            :sort-option="sortOption"
-            :border-y="true"
-            :row-style-option="rowStyleOption"
-          />
-          <div class="table-pagination">
-            <ve-pagination
-              :total="totalCount"
-              :page-index="pageIndex"
-              :page-size="pageSize"
-              @on-page-number-change="pageNumberChange"
-              @on-page-size-change="pageSizeChange"
-              class="w-100"
-            />
+          <div class="row justify-content-between">
+            <div class="col-md-1">
+              <b-form-group class="mb-0">
+                <b-form-select
+                  id="per-page-select"
+                  v-model="perPage"
+                  :options="pageOptions"
+                  size="sm"
+                ></b-form-select>
+              </b-form-group>
+            </div>
+            <div class="col-md-3">
+              <b-form-group class="mb-0">
+                <b-input-group>
+                  <template #prepend>
+                    <b-input-group-text>
+                      <i class="menu-icon flaticon-search"></i>
+                    </b-input-group-text>
+                  </template>
+                  <b-form-input
+                    v-model="search"
+                    placeholder="Search"
+                  ></b-form-input>
+                </b-input-group>
+              </b-form-group>
+            </div>
+          </div>
+          <b-table
+            hover
+            :items="tableData"
+            :fields="columns"
+            :per-page="perPage"
+            :current-page="currentPage"
+          >
+            <template #cell(action)="row">
+              <span class="mr-2" @click="handleView(row.item)">
+                <b-button
+                  variant="success"
+                  class="py-1 px-2"
+                  id="detail"
+                  title="detail"
+                >
+                  <i class="menu-icon flaticon-eye pr-0"></i>
+                </b-button>
+              </span>
+            </template>
+          </b-table>
+          <div class="row justify-content-end">
+            <div class="col-md-3">
+              <b-pagination
+                v-model="currentPage"
+                :total-rows="totalRows"
+                :per-page="perPage"
+                size="md"
+                align="fill"
+                class="ml-auto"
+                style="padding: 0"
+              ></b-pagination>
+            </div>
           </div>
         </b-card>
       </div>
@@ -82,7 +125,11 @@ export default {
       },
       search: "",
       pageIndex: 1,
+      totalRows: 10,
+      currentPage: 1,
       pageSize: 10,
+      perPage: 10,
+      pageOptions: [10, 15, { value: 100, text: "Show a lot" }],
       sortOption: {
         sortChange: (params) => {
           this.sortChange(params);
@@ -90,51 +137,33 @@ export default {
       },
       columns: [
         {
-          field: "customer",
-          key: "a",
-          title: "Customer",
+          key: "customer",
+          label: "Customer",
           align: "left",
           sortBy: "",
         },
         {
-          field: "tanggal",
-          key: "b",
-          title: "Tanggal",
+          key: "tanggal",
+          label: "Tanggal",
           align: "left",
           sortBy: "",
         },
         {
-          field: "planPatrol",
-          key: "c",
-          title: "Plan Patrol",
+          key: "planPatrol",
+          label: "Plan Patrol",
           align: "left",
           sortBy: "",
         },
         {
-          field: "jumlahScan",
-          key: "d",
-          title: "Jumlah Scan",
+          key: "jumlahScan",
+          label: "Jumlah Scan",
           align: "left",
           sortBy: "",
         },
         {
-          field: "",
-          key: "e",
-          title: "Aksi",
+          key: "action",
+          label: "Aksi",
           align: "center",
-          // eslint-disable-next-line
-            renderBodyCell: ({ row, column, rowIndex }, h) => {
-            return (
-              <span on-click={() => this.handleView(row)}>
-                <b-button variant="success" class="py-1 px-2" id="detail">
-                  <i class="menu-icon flaticon-eye pr-0"></i>
-                </b-button>
-                <b-tooltip target="detail" triggers="hover">
-                  Detail
-                </b-tooltip>
-              </span>
-            );
-          },
         },
       ],
     };
@@ -142,14 +171,14 @@ export default {
   components: {},
   computed: {
     tableData() {
-      const { pageIndex, pageSize } = this;
-      return DB_DATA.slice((pageIndex - 1) * pageSize, pageIndex * pageSize);
+      return DB_DATA;
     },
     totalCount() {
       return DB_DATA.length;
     },
   },
   mounted() {
+    this.totalRows = this.tableData.length;
     this.$store.dispatch(SET_BREADCRUMB, [
       { title: "Dashboard", route: "/dashboard" },
       { title: "Patroli" },

@@ -2,7 +2,7 @@
   <div
     class="v-application v-application--is-ltr theme--light menuable__content__active"
   >
-    <!--begin::Brodcast-->
+    <!--begin::Bank-->
     <div class="row">
       <div class="col-xxl-12 col-12 col-md-12">
         <b-card>
@@ -82,7 +82,7 @@
         </b-card>
       </div>
     </div>
-    <!--end::Brodcast-->
+    <!--end::Bank-->
   </div>
 </template>
 
@@ -101,7 +101,6 @@ export default {
       },
       search: "",
       pageIndex: 1,
-      //
       totalRows: 10,
       currentPage: 1,
       pageSize: 10,
@@ -174,7 +173,7 @@ export default {
     handleDelete(item) {
       this.deleteValue = "";
       this.$bvModal
-        .msgBoxConfirm("Please confirm that you want to delete this data.", {
+        .msgBoxConfirm(`Please confirm that you want to delete this data.`, {
           title: "Confirm Delete",
           size: "sm",
           buttonSize: "sm",
