@@ -27,26 +27,61 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-xxl-12">
+      <div class="col-xxl-12 col-12 col-md-12">
         <b-card>
-          <ve-table
-            :columns="columns"
-            :table-data="tableData"
-            :sort-option="sortOption"
-            :row-style-option="rowStyleOption"
-            :border-around="true"
-            :border-x="false"
-            :border-y="false"
-          />
-          <div class="table-pagination">
-            <ve-pagination
-              :total="totalCount"
-              :page-index="pageIndex"
-              :page-size="pageSize"
-              @on-page-number-change="pageNumberChange"
-              @on-page-size-change="pageSizeChange"
-              class="w-100"
-            />
+          <div class="row justify-content-between">
+            <div class="col-md-1">
+              <b-form-group class="mb-0">
+                <b-form-select
+                  id="per-page-select"
+                  v-model="perPage"
+                  :options="pageOptions"
+                  size="sm"
+                ></b-form-select>
+              </b-form-group>
+            </div>
+            <div class="col-md-3">
+              <b-form-group class="mb-0">
+                <b-input-group>
+                  <template #prepend>
+                    <b-input-group-text>
+                      <i class="menu-icon flaticon-search"></i>
+                    </b-input-group-text>
+                  </template>
+                  <b-form-input
+                    v-model="search"
+                    placeholder="Search"
+                  ></b-form-input>
+                </b-input-group>
+              </b-form-group>
+            </div>
+          </div>
+          <b-table
+            hover
+            :items="tableData"
+            :fields="columns"
+            :per-page="perPage"
+            :current-page="currentPage"
+          >
+            <template #cell(action)="row">
+              <img
+                :src="row.item.foto"
+                style="width: 100%; object-fit: scale-down"
+              />
+            </template>
+          </b-table>
+          <div class="row justify-content-end">
+            <div class="col-md-3">
+              <b-pagination
+                v-model="currentPage"
+                :total-rows="totalRows"
+                :per-page="perPage"
+                size="md"
+                align="fill"
+                class="ml-auto"
+                style="padding: 0"
+              ></b-pagination>
+            </div>
           </div>
         </b-card>
       </div>
@@ -84,7 +119,11 @@ export default {
       // },
       search: "",
       pageIndex: 1,
+      totalRows: 10,
+      currentPage: 1,
       pageSize: 10,
+      perPage: 10,
+      pageOptions: [10, 15, { value: 100, text: "Show a lot" }],
       sortOption: {
         sortChange: (params) => {
           this.sortChange(params);
@@ -92,68 +131,67 @@ export default {
       },
       columns: [
         {
-          field: "customer",
-          key: "a",
-          title: "Customer",
+          key: "customer",
+          label: "Customer",
           align: "left",
           sortBy: "",
         },
         {
-          field: "tanggal",
-          key: "b",
-          title: "Tanggal",
+          key: "tanggal",
+          label: "Tanggal",
           align: "left",
           sortBy: "",
         },
         {
-          field: "petugas",
-          key: "C",
-          title: "Petugas",
+          key: "petugas",
+          label: "Petugas",
           align: "left",
           sortBy: "",
         },
-        { field: "area", key: "d", title: "Area", align: "left", sortBy: "" },
         {
-          field: "lokasi",
-          key: "e",
-          title: "Lokasi",
+          key: "area",
+          label: "Area",
           align: "left",
           sortBy: "",
         },
-        { field: "PIC", key: "f", title: "PIC", align: "left", sortBy: "" },
         {
-          field: "perihal",
-          key: "g",
-          title: "Perihal",
+          key: "lokasi",
+          label: "Lokasi",
           align: "left",
           sortBy: "",
-          width: "20%",
         },
-        { field: "user", key: "h", title: "User", align: "left", sortBy: "" },
         {
-          field: "alamat",
-          key: "i",
-          title: "Alamat",
+          key: "PIC",
+          label: "PIC",
+          align: "left",
+          sortBy: "",
+        },
+        {
+          key: "perihal",
+          label: "Perihal",
           align: "left",
           sortBy: "",
           width: "20%",
         },
         {
-          field: "",
-          key: "j",
-          title: "Foto",
+          key: "user",
+          label: "User",
           align: "left",
           sortBy: "",
-          width: "5%",
-          // eslint-disable-next-line
-          renderBodyCell: ({ row, column, rowIndex }, h) => {
-            return (
-              <img
-                src={row.foto}
-                style="width: 100%;object-fit: scale-down"
-              ></img>
-            );
-          },
+        },
+        {
+          key: "alamat",
+          label: "Alamat",
+          align: "left",
+          sortBy: "",
+          width: "20%",
+        },
+        {
+          key: "action",
+          label: "Foto",
+          align: "left",
+          sortBy: "",
+          width: "10%",
         },
       ],
     };
@@ -161,14 +199,14 @@ export default {
   components: {},
   computed: {
     tableData() {
-      const { pageIndex, pageSize } = this;
-      return DB_DATA.slice((pageIndex - 1) * pageSize, pageIndex * pageSize);
+      return DB_DATA;
     },
     totalCount() {
       return DB_DATA.length;
     },
   },
   mounted() {
+    this.totalRows = this.tableData.length;
     this.$store.dispatch(SET_BREADCRUMB, [
       { title: "Dashboard", route: "/dashboard" },
       { title: "Harian" },

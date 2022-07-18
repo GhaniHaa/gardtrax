@@ -2,6 +2,36 @@
   <div
     class="v-application v-application--is-ltr theme--light menuable__content__active"
   >
+    <b-row class="mb-4">
+      <b-col lg="4" class="my-1">
+        <b-form-group class="mb-0" v-slot="{ ariaDescribedby }">
+          <b-input-group size="sm">
+            <b-form-select
+              id="sort-by-select"
+              v-model="sortBy"
+              :options="sortOptions"
+              :aria-describedby="ariaDescribedby"
+              class="w-75"
+            >
+              <template #first>
+                <option value="">-- none --</option>
+              </template>
+            </b-form-select>
+
+            <b-form-select
+              v-model="sortDesc"
+              :disabled="!sortBy"
+              :aria-describedby="ariaDescribedby"
+              size="sm"
+              class="w-25"
+            >
+              <option :value="false">Asc</option>
+              <option :value="true">Desc</option>
+            </b-form-select>
+          </b-input-group>
+        </b-form-group>
+      </b-col>
+    </b-row>
     <!--begin::Brodcast-->
     <div class="row">
       <div class="col-xxl-12 col-12 col-md-12">
@@ -13,7 +43,7 @@
           <b-table
             hover
             :items="tableData"
-            :fields="columns"
+            :fields="fields"
             :per-page="perPage"
             :current-page="currentPage"
           >
@@ -96,24 +126,29 @@ export default {
           this.sortChange(params);
         },
       },
-      columns: [
+      fields: [
         {
           key: "nama",
           label: "Nama",
           align: "left",
           sortBy: "",
+          sortByFormatted: true,
+          filterByFormatted: true,
+          sortable: true,
         },
         {
           key: "username",
           label: "Username",
           align: "left",
           sortBy: "",
+          sortable: true,
         },
         {
           key: "email",
           label: "Email",
           align: "left",
           sortBy: "",
+          sortable: true,
         },
         {
           key: "action",
@@ -122,6 +157,11 @@ export default {
           width: "10%",
         },
       ],
+      sortBy: "",
+      sortDesc: false,
+      sortDirection: "asc",
+      filter: null,
+      filterOn: [],
     };
   },
   components: {},
@@ -132,6 +172,13 @@ export default {
     },
     totalCount() {
       return DB_DATA.length;
+    },
+    sortOptions() {
+      return this.fields
+        .filter((f) => f.sortable)
+        .map((f) => {
+          return { text: f.label, value: f.key };
+        });
     },
   },
   mounted() {
@@ -176,6 +223,11 @@ export default {
           email: "ardiyanyoko20@gmail.com",
         });
       }
+    },
+    onFiltered(filteredItems) {
+      // Trigger pagination to update the number of buttons/pages due to filtering
+      this.totalRows = filteredItems.length;
+      this.currentPage = 1;
     },
   },
 };

@@ -1,0 +1,56 @@
+<template>
+  <div>
+    <!--begin::Dashboard-->
+    <div class="row gutter-b">
+      <div class="col-xxl-12">
+        <b-card header-tag="header" footer-tag="footer">
+          <template v-slot:header>
+            <h6 class="mb-0">Edit Level Jabatan</h6>
+          </template>
+          <div class="mb-4">
+            <h6 class="mb-1">Nama</h6>
+            <b-form-input
+              v-model="nama"
+              placeholder="Masukan nama level jabatan"
+            ></b-form-input>
+          </div>
+          <div class="mb-4">
+            <h6 class="mb-1">No Urut</h6>
+            <b-form-input
+              v-model="nama"
+              placeholder="Masukan no urut level jabatan"
+            ></b-form-input>
+          </div>
+          <template v-slot:footer>
+            <b-button variant="primary">Submit</b-button>
+          </template>
+        </b-card>
+      </div>
+    </div>
+    <!--end::Dashboard-->
+  </div>
+</template>
+
+<script>
+import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
+
+export default {
+  name: "EditMasterLevelJabatan",
+  data() {
+    return {
+      selected: null,
+      nama: "",
+    };
+  },
+  components: {},
+  mounted() {
+    this.$store.dispatch(SET_BREADCRUMB, [
+      { title: "Dashboard", route: "/dashboard" },
+      { title: "Level Jabatan", route: "/master/lvl-jabatan" },
+      { title: "Edit Level Jabatan" },
+    ]);
+  },
+  methods: {},
+};
+</script>
+<style lang="scss"></style>

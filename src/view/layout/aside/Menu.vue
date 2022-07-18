@@ -257,6 +257,69 @@
           </router-link>
 
           <router-link
+            to="/customer/branch"
+            v-slot="{ href, navigate, isActive, isExactActive }"
+          >
+            <li
+              aria-haspopup="true"
+              data-menu-toggle="hover"
+              class="menu-item"
+              :class="[
+                isActive && 'menu-item-active',
+                isExactActive && 'menu-item-active',
+              ]"
+            >
+              <a :href="href" class="menu-link" @click="navigate">
+                <i class="menu-bullet menu-bullet-dot">
+                  <span></span>
+                </i>
+                <span class="menu-text">Customer Branch</span>
+              </a>
+            </li>
+          </router-link>
+        </ul>
+      </div>
+    </li>
+    <router-link
+      to="/brodcast"
+      v-slot="{ href, navigate, isActive, isExactActive }"
+    >
+      <li
+        aria-haspopup="true"
+        data-menu-toggle="hover"
+        class="menu-item"
+        :class="[
+          isActive && 'menu-item-active',
+          isExactActive && 'menu-item-active',
+        ]"
+      >
+        <a :href="href" class="menu-link" @click="navigate">
+          <i class="menu-icon flaticon2-speaker"></i>
+          <span class="menu-text">Brodcast Message</span>
+        </a>
+      </li>
+    </router-link>
+    <li class="menu-section">
+      <h4 class="menu-text">Admin</h4>
+      <i class="menu-icon flaticon-more-v2"></i>
+    </li>
+    <li
+      aria-haspopup="true"
+      data-menu-toggle="hover"
+      class="menu-item menu-item-submenu"
+      v-bind:class="{
+        'menu-item-open': hasActiveChildren('/master'),
+      }"
+    >
+      <a href="#" class="menu-link menu-toggle">
+        <i class="menu-icon flaticon-folder-1"></i>
+        <span class="menu-text">Master (belum)</span>
+        <i class="menu-arrow"></i>
+      </a>
+      <div class="menu-submenu">
+        <span class="menu-arrow"></span>
+        <ul class="menu-subnav">
+          <router-link
             to="/customer/qr-code"
             v-slot="{ href, navigate, isActive, isExactActive }"
           >
@@ -313,7 +376,7 @@
     >
       <a href="#" class="menu-link menu-toggle">
         <i class="menu-icon flaticon-folder-1"></i>
-        <span class="menu-text">Master (belum)</span>
+        <span class="menu-text">Master</span>
         <i class="menu-arrow"></i>
       </a>
       <div class="menu-submenu">
@@ -340,7 +403,6 @@
               </a>
             </li>
           </router-link>
-
           <router-link
             to="/master/bank"
             v-slot="{ href, navigate, isActive, isExactActive }"
@@ -422,27 +484,6 @@
                   <span></span>
                 </i>
                 <span class="menu-text">Divisi</span>
-              </a>
-            </li>
-          </router-link>
-          <router-link
-            to="/master/inisiasi"
-            v-slot="{ href, navigate, isActive, isExactActive }"
-          >
-            <li
-              aria-haspopup="true"
-              data-menu-toggle="hover"
-              class="menu-item"
-              :class="[
-                isActive && 'menu-item-active',
-                isExactActive && 'menu-item-active',
-              ]"
-            >
-              <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot">
-                  <span></span>
-                </i>
-                <span class="menu-text">Inisiasi</span>
               </a>
             </li>
           </router-link>
