@@ -182,7 +182,7 @@
     </div>
     <div class="row gutter-b">
       <div class="col-12">
-        <b-card header-tag="header" footer-tag="footer" class="gutter-b">
+        <b-card header-tag="header" footer-tag="footer">
           <template v-slot:header>
             <h6 class="mb-0">Jadwal & Shift</h6>
             <span class="text-danger"
@@ -238,6 +238,58 @@
                 @click="handleAddShift()"
                 >Add</b-button
               >
+            </div>
+          </div>
+        </b-card>
+      </div>
+    </div>
+    <div class="row gutter-b">
+      <div class="col-12">
+        <b-card header-tag="header" footer-tag="footer" class="gutter-b">
+          <template v-slot:header>
+            <h6 class="mb-0">Radius Absen</h6>
+          </template>
+          <div class="row m-0">
+            <div class="col-md-6 p-0">
+              <GmapMap
+                :center="{ lat: 10, lng: 10 }"
+                :zoom="7"
+                map-type-id="terrain"
+                style="width: 500px; height: 300px"
+              >
+                <GmapMarker
+                  :key="index"
+                  v-for="(m, index) in markers"
+                  :position="m.position"
+                  :clickable="true"
+                  :draggable="true"
+                  @click="center = m.position"
+                />
+              </GmapMap>
+            </div>
+            <div class="col-md-6 p-0">
+              <div class="mb-6">
+                <h6 class="mb-1">Alamat</h6>
+                <b-form-input
+                  v-model="alamat"
+                  placeholder="Alamat"
+                ></b-form-input>
+              </div>
+              <div class="row mb-6">
+                <div class="col-md-4">
+                  <h6 class="mb-1">Pembatasan</h6>
+                </div>
+                <div class="col-md-4">
+                  <b-form-checkbox size="lg">Check in</b-form-checkbox>
+                </div>
+                <div class="col-md-4">
+                  <b-form-checkbox size="lg">Check out</b-form-checkbox>
+                </div>
+              </div>
+              <v-alert border="top" colored-border type="info" elevation="2">
+                Jika anda melakukan pembatasan, karyawan yang absen diluar
+                radius tidak akan bisa absen.
+              </v-alert>
             </div>
           </div>
         </b-card>
@@ -357,6 +409,9 @@ export default {
           end: "",
         },
       ],
+      // MAPS
+      markers: [],
+      place: null,
     };
   },
   components: {},
@@ -364,8 +419,8 @@ export default {
   mounted() {
     let lastBreadcrumb = {};
     if (this.$route.name === "customer-edit")
-      lastBreadcrumb = { title: "Edit Customer Branch" };
-    else lastBreadcrumb = { title: "Add Customer Branch" };
+      lastBreadcrumb = { title: "Edit Customer" };
+    else lastBreadcrumb = { title: "Add Customer" };
     this.$store.dispatch(SET_BREADCRUMB, [
       { title: "Dashboard", route: "/dashboard" },
       { title: "Customer", route: "/customer" },
