@@ -185,7 +185,7 @@ export default {
         {
           key: "action",
           label: "Aksi",
-          align: "center"
+          align: "center",
         },
       ],
     };
@@ -193,7 +193,7 @@ export default {
   components: {},
   computed: {
     tableData() {
-      return DB_DATA
+      return DB_DATA;
     },
     totalCount() {
       return DB_DATA.length;
@@ -235,7 +235,7 @@ export default {
       DB_DATA = [];
       for (let i = 0; i < 1000; i++) {
         DB_DATA.push({
-          id: i+1,
+          id: i + 1,
           parent: "Papah",
           nama: "Feri (Danru)",
           cabang: "BNI",
