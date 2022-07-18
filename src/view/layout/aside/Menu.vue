@@ -277,6 +277,27 @@
               </a>
             </li>
           </router-link>
+          <router-link
+            to="/customer/qr-code"
+            v-slot="{ href, navigate, isActive, isExactActive }"
+          >
+            <li
+              aria-haspopup="true"
+              data-menu-toggle="hover"
+              class="menu-item"
+              :class="[
+                isActive && 'menu-item-active',
+                isExactActive && 'menu-item-active',
+              ]"
+            >
+              <a :href="href" class="menu-link" @click="navigate">
+                <i class="menu-bullet menu-bullet-dot">
+                  <span></span>
+                </i>
+                <span class="menu-text">Generate QR Code</span>
+              </a>
+            </li>
+          </router-link>
         </ul>
       </div>
     </li>
@@ -302,46 +323,6 @@
     <li class="menu-section">
       <h4 class="menu-text">Admin</h4>
       <i class="menu-icon flaticon-more-v2"></i>
-    </li>
-    <li
-      aria-haspopup="true"
-      data-menu-toggle="hover"
-      class="menu-item menu-item-submenu"
-      v-bind:class="{
-        'menu-item-open': hasActiveChildren('/master'),
-      }"
-    >
-      <a href="#" class="menu-link menu-toggle">
-        <i class="menu-icon flaticon-folder-1"></i>
-        <span class="menu-text">Master (belum)</span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="menu-submenu">
-        <span class="menu-arrow"></span>
-        <ul class="menu-subnav">
-          <router-link
-            to="/customer/qr-code"
-            v-slot="{ href, navigate, isActive, isExactActive }"
-          >
-            <li
-              aria-haspopup="true"
-              data-menu-toggle="hover"
-              class="menu-item"
-              :class="[
-                isActive && 'menu-item-active',
-                isExactActive && 'menu-item-active',
-              ]"
-            >
-              <a :href="href" class="menu-link" @click="navigate">
-                <i class="menu-bullet menu-bullet-dot">
-                  <span></span>
-                </i>
-                <span class="menu-text">Generate QR Code</span>
-              </a>
-            </li>
-          </router-link>
-        </ul>
-      </div>
     </li>
     <router-link
       to="/brodcast"
