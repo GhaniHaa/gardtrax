@@ -22,7 +22,8 @@
           v-bind:class="headerMenuClasses"
         >
           <!-- example static menu here -->
-          <KTMenu></KTMenu>
+          <!-- <KTMenu></KTMenu> -->
+          <h2 class="text-primary font-weight-bold">{{ firstUrl }}</h2>
         </div>
       </div>
       <!-- end:: Header Menu -->
@@ -37,13 +38,13 @@ import { mapGetters } from "vuex";
 import KTTopbar from "@/view/layout/header/Topbar.vue";
 import KTLayoutHeader from "@/assets/js/layout/base/header.js";
 import KTLayoutHeaderMenu from "@/assets/js/layout/base/header-menu.js";
-import KTMenu from "@/view/layout/header/Menu.vue";
+// import KTMenu from "@/view/layout/header/Menu.vue";
 
 export default {
   name: "KTHeader",
   components: {
     KTTopbar,
-    KTMenu,
+    // KTMenu,
   },
   mounted() {
     // Init Desktop & Mobile Headers
@@ -96,6 +97,15 @@ export default {
         return classes.join(" ");
       }
       return null;
+    },
+
+    firstUrl() {
+      return this.capitalizeFirstLetter(this.$route.path.split("/")[1]);
+    },
+  },
+  methods: {
+    capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
     },
   },
 };

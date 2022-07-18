@@ -2,30 +2,7 @@
   <div
     class="v-application v-application--is-ltr theme--light menuable__content__active"
   >
-    <!--begin::Attendance-->
-    <div class="row">
-      <div class="col-xxl-3 col-12 col-md-3 pt-0 pb-0">
-        <div class="card gutter-b">
-          <b-form-select
-            v-model="selected"
-            :options="filterArea"
-          ></b-form-select>
-        </div>
-      </div>
-      <div class="col-xxl-3 col-12 col-md-3 pt-0 pb-0">
-        <div class="card gutter-b">
-          <b-form-select
-            v-model="selected"
-            :options="filterCustomer"
-          ></b-form-select>
-        </div>
-      </div>
-      <div class="col-xxl-2 col-12 col-md-3 pt-0 pb-0">
-        <div class="card gutter-b">
-          <b-button variant="primary" class="w-100">Export Excel</b-button>
-        </div>
-      </div>
-    </div>
+    <!--begin::Brodcast-->
     <div class="row">
       <div class="col-xxl-12 col-12 col-md-12">
         <b-card>
@@ -105,7 +82,7 @@
         </b-card>
       </div>
     </div>
-    <!--end::Attendance-->
+    <!--end::Brodcast-->
   </div>
 </template>
 
@@ -113,23 +90,9 @@
 import { SET_BREADCRUMB } from "@/core/services/store/breadcrumbs.module";
 let DB_DATA = [];
 export default {
-  name: "ListEmployee",
+  name: "ViewMasterService",
   data() {
     return {
-      filterArea: [
-        { value: null, text: "Filter Area Kerja" },
-        { value: "a", text: "This is First option" },
-        { value: "b", text: "Selected Option" },
-        { value: { C: "3PO" }, text: "This is an option with object value" },
-        { value: "d", text: "This one is disabled", disabled: true },
-      ],
-      filterCustomer: [
-        { value: null, text: "Filter Customer" },
-        { value: "a", text: "This is First option" },
-        { value: "b", text: "Selected Option" },
-        { value: { C: "3PO" }, text: "This is an option with object value" },
-        { value: "d", text: "This one is disabled", disabled: true },
-      ],
       selected: null,
       isLoading: false,
       // Table
@@ -151,48 +114,25 @@ export default {
       },
       columns: [
         {
-          key: "id",
-          label: "ID",
-          align: "left",
-          sortBy: "",
-        },
-        {
-          key: "parent",
-          label: "Parent",
-          align: "left",
-          sortBy: "",
-        },
-        {
           key: "nama",
           label: "Nama",
           align: "left",
-          sortBy: "",
-          width: "30%",
-        },
-        {
-          key: "cabang",
-          label: "Cabang",
-          align: "left",
-          sortBy: "",
-        },
-        {
-          key: "tanggalPerjanjian",
-          label: "Tanggal Berlaku Perjanjian",
-          align: "left",
-          width: "",
           sortBy: "",
         },
         {
           key: "action",
           label: "Aksi",
           align: "center",
+          width: "10%",
         },
       ],
+      deleteValue: "",
     };
   },
   components: {},
   computed: {
     tableData() {
+      //   const { pageIndex, pageSize } = this;
       return DB_DATA;
     },
     totalCount() {
@@ -203,7 +143,7 @@ export default {
     this.totalRows = this.tableData.length;
     this.$store.dispatch(SET_BREADCRUMB, [
       { title: "Dashboard", route: "/dashboard" },
-      { title: "Customer" },
+      { title: "Service" },
     ]);
   },
   created() {
@@ -226,20 +166,35 @@ export default {
       this.pageSize = pageSize;
     },
     handleButtonAdd() {
-      this.$router.push({ path: `/customer/create` });
+      this.$router.push({ path: `/master/service/create` });
     },
     handleEdit(item) {
-      this.$router.push({ path: `/customer/edit/${item.id}` });
+      this.$router.push({ path: `/master/service/edit/${item.id}` });
+    },
+    handleDelete(item) {
+      this.deleteValue = "";
+      this.$bvModal
+        .msgBoxConfirm("Please confirm that you want to delete this data.", {
+          title: "Confirm Delete",
+          size: "sm",
+          buttonSize: "sm",
+          okVariant: "danger",
+          okTitle: "Delete",
+          cancelTitle: "Cancel",
+          footerClass: "p-2",
+          hideHeaderClose: false,
+          centered: true,
+        })
+        .then(() => {
+          this.deleteValue = item;
+        });
     },
     initDatabase() {
       DB_DATA = [];
-      for (let i = 0; i < 1000; i++) {
+      for (let i = 0; i < 100; i++) {
         DB_DATA.push({
-          id: i + 1,
-          parent: "Papah",
-          nama: "Feri (Danru)",
-          cabang: "BNI",
-          tanggalPerjanjian: "01/12/2021",
+          id: i,
+          nama: "Customer Service-" + i,
         });
       }
     },

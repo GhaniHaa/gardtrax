@@ -4,25 +4,55 @@
   >
     <!--begin::Detail Attendance-->
     <div class="row">
-      <div class="col-xxl-12">
+      <div class="col-xxl-12 col-12 col-md-12">
         <b-card>
-          <ve-table
-            :columns="columns"
-            :table-data="tableData"
-            :sort-option="sortOption"
-            :border-y="true"
-            :row-style-option="rowStyleOption"
-          />
-          <div class="table-pagination">
-            <ve-pagination
-              :total="totalCount"
-              :page-index="pageIndex"
-              :page-size="pageSize"
-              @on-page-number-change="pageNumberChange"
-              @on-page-size-change="pageSizeChange"
-              :border-y="true"
-              class="w-100"
-            />
+          <div class="row justify-content-between">
+            <div class="col-md-1">
+              <b-form-group class="mb-0">
+                <b-form-select
+                  id="per-page-select"
+                  v-model="perPage"
+                  :options="pageOptions"
+                  size="sm"
+                ></b-form-select>
+              </b-form-group>
+            </div>
+            <div class="col-md-3">
+              <b-form-group class="mb-0">
+                <b-input-group>
+                  <template #prepend>
+                    <b-input-group-text>
+                      <i class="menu-icon flaticon-search"></i>
+                    </b-input-group-text>
+                  </template>
+                  <b-form-input
+                    v-model="search"
+                    placeholder="Search"
+                  ></b-form-input>
+                </b-input-group>
+              </b-form-group>
+            </div>
+          </div>
+          <b-table
+            hover
+            :items="tableData"
+            :fields="columns"
+            :per-page="perPage"
+            :current-page="currentPage"
+          >
+          </b-table>
+          <div class="row justify-content-end">
+            <div class="col-md-3">
+              <b-pagination
+                v-model="currentPage"
+                :total-rows="totalRows"
+                :per-page="perPage"
+                size="md"
+                align="fill"
+                class="ml-auto"
+                style="padding: 0"
+              ></b-pagination>
+            </div>
           </div>
         </b-card>
       </div>
@@ -60,7 +90,11 @@ export default {
       },
       search: "",
       pageIndex: 1,
+      totalRows: 10,
+      currentPage: 1,
       pageSize: 10,
+      perPage: 10,
+      pageOptions: [10, 15, { value: 100, text: "Show a lot" }],
       sortOption: {
         sortChange: (params) => {
           this.sortChange(params);
@@ -68,78 +102,68 @@ export default {
       },
       columns: [
         {
-          field: "nip",
-          key: "b",
-          title: "NIP",
+          key: "nip",
+          label: "NIP",
           align: "left",
           sortBy: "",
         },
         {
-          field: "petugas",
-          key: "c",
-          title: "Petugas",
+          key: "petugas",
+          label: "Petugas",
           align: "left",
           sortBy: "",
         },
         {
-          field: "customer",
-          key: "d",
-          title: "Customer",
+          key: "customer",
+          label: "Customer",
           align: "left",
           sortBy: "",
         },
         {
-          field: "tanggal",
-          key: "e",
-          title: "Tanggal",
+          key: "tanggal",
+          label: "Tanggal",
           align: "left",
           width: "",
           sortBy: "",
         },
         {
-          field: "shift",
-          key: "f",
-          title: "Shift",
+          key: "shift",
+          label: "Shift",
           align: "left",
           width: "",
           sortBy: "",
         },
         {
-          field: "checkIn",
-          key: "g",
-          title: "Check In",
+          key: "checkIn",
+          label: "Check In",
           align: "left",
           width: "",
           sortBy: "",
         },
         {
-          field: "checkOut",
-          key: "h",
-          title: "Check Out",
+          key: "checkOut",
+          label: "Check Out",
           align: "left",
           width: "",
           sortBy: "",
         },
         {
-          field: "status",
-          key: "i",
-          title: "Status",
+          key: "status",
+          label: "Status",
           align: "left",
           width: "",
           sortBy: "",
         },
         {
-          field: "pengganti",
-          key: "j",
-          title: "Pengganti",
+          key: "pengganti",
+          label: "Pengganti",
           align: "left",
           width: "",
           sortBy: "",
         },
         {
-          field: "danru",
-          key: "k",
-          title: "Danru",
+          key: "danru",
+          label: "Danru",
           align: "left",
           width: "",
           sortBy: "",
@@ -150,14 +174,14 @@ export default {
   components: {},
   computed: {
     tableData() {
-      const { pageIndex, pageSize } = this;
-      return DB_DATA.slice((pageIndex - 1) * pageSize, pageIndex * pageSize);
+      return DB_DATA;
     },
     totalCount() {
       return DB_DATA.length;
     },
   },
   mounted() {
+    this.totalRows = this.tableData.length;
     this.$store.dispatch(SET_BREADCRUMB, [
       { title: "Dashboard", route: "/dashboard" },
       { title: "Absensi", route: "/report" },
