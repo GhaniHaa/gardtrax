@@ -11,7 +11,7 @@
   },
   "loader": {
     "type": "spinner-logo",
-    "logo": "media/logos/logo-letter-1.png",
+    "logo": "media/logos/logo_tdp.png",
     "message": "Please wait..."
   },
   "breakpoints": {

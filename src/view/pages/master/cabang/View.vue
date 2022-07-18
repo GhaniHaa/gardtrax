@@ -172,21 +172,22 @@ export default {
       this.$router.push({ path: `/master/cabang/edit/${item.id}` });
     },
     handleDelete(item) {
-      this.deleteValue = ''
-        this.$bvModal.msgBoxConfirm('Please confirm that you want to delete this data.', {
-          title: 'Confirm Delete',
-          size: 'sm',
-          buttonSize: 'sm',
-          okVariant: 'danger',
-          okTitle: 'Delete',
-          cancelTitle: 'Cancel',
-          footerClass: 'p-2',
+      this.deleteValue = "";
+      this.$bvModal
+        .msgBoxConfirm("Please confirm that you want to delete this data.", {
+          title: "Confirm Delete",
+          size: "sm",
+          buttonSize: "sm",
+          okVariant: "danger",
+          okTitle: "Delete",
+          cancelTitle: "Cancel",
+          footerClass: "p-2",
           hideHeaderClose: false,
-          centered: true
+          centered: true,
         })
-          .then(() => {
-            this.deleteValue = item;
-          })
+        .then(() => {
+          this.deleteValue = item;
+        });
     },
     initDatabase() {
       DB_DATA = [];
