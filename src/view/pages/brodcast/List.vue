@@ -137,7 +137,7 @@ export default {
   components: {},
   computed: {
     tableData() {
-      return DB_DATA
+      return DB_DATA;
     },
     totalCount() {
       return DB_DATA.length;
