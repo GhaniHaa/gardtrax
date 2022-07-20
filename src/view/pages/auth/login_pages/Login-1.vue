@@ -1,3 +1,12 @@
+<style lang="scss" scoped>
+.bg-signin-overlay {
+  background-image: url("/media/bg/background-signin.png");
+  background-color: #1e37a5;
+  background-blend-mode: overlay;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+</style>
 <template>
   <div class="d-flex flex-column flex-root">
     <div
@@ -11,28 +20,24 @@
     >
       <!--begin::Aside-->
       <div
-        class="login-aside d-flex flex-column flex-row-auto"
-        style="background-color: #f2c98a"
+        class="login-aside d-flex flex-column flex-row-auto bg-signin-overlay"
+        :style="{ backgroundImage: `url(${backgroundImage})` }"
       >
-        <div class="d-flex flex-column-auto flex-column pt-lg-40 pt-15">
+        <div
+          class="d-flex flex-column-auto flex-column pt-lg-40 pt-15 justify-content-between h-100"
+        >
           <a href="#" class="text-center mb-10">
-            <img
-              src="media/logos/logo-letter-1.png"
-              class="max-h-70px"
-              alt=""
-            />
+            <img src="media/logos/logo-login.png" alt="" width="239px" />
           </a>
           <h3
-            class="font-weight-bolder text-center font-size-h4 font-size-h1-lg"
-            style="color: #986923"
+            class="font-weight-bolder text-center font-size-h4 font-size-h1-lg text-white"
           >
-            Discover Amazing Metronic <br />with great build tools
+            We're created a purposive value<br />not just a professional people.
           </h3>
+          <h5 class="text-white text-center font-weight-bold pb-lg-15">
+            Gardtrax by TDP Indonesia
+          </h5>
         </div>
-        <div
-          class="aside-img d-flex flex-row-fluid bgi-no-repeat bgi-position-y-bottom bgi-position-x-center"
-          :style="{ backgroundImage: `url(${backgroundImage})` }"
-        ></div>
       </div>
       <!--begin::Aside-->
       <!--begin::Content-->
@@ -51,15 +56,15 @@
                 <h3
                   class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg"
                 >
-                  Welcome to Metronic
+                  Welcome to Gardtrax
                 </h3>
                 <span class="text-muted font-weight-bold font-size-h4"
-                  >New Here?
+                  >Need Help?
                   <a
                     id="kt_login_signup"
                     class="text-primary font-weight-bolder"
                     @click="showForm('signup')"
-                    >Create an Account</a
+                    >Contact Admin</a
                   ></span
                 >
               </div>
@@ -114,16 +119,6 @@
                   class="btn btn-primary font-weight-bolder font-size-h6 px-15 py-4 my-3 mr-3"
                 >
                   Sign In
-                </button>
-                <button
-                  type="button"
-                  class="btn btn-light-primary font-weight-bolder px-8 py-4 my-3 font-size-lg"
-                >
-                  <span class="svg-icon svg-icon-md">
-                    <inline-svg
-                      src="media/svg/social-icons/google.svg"
-                    /> </span
-                  >Sign in with Google
                 </button>
               </div>
             </form>
@@ -265,7 +260,7 @@
         </div>
         <!--begin::Content footer-->
         <div
-          class="d-flex justify-content-lg-start justify-content-center align-items-end py-7 py-lg-0"
+          class="d-flex justify-content-lg-start justify-content-center align-items-end py-7 py-lg-0 pb-lg-10"
         >
           <a href="#" class="text-primary font-weight-bolder font-size-h5"
             >Terms</a
@@ -321,9 +316,7 @@ export default {
     ...mapGetters(["currentUser"]),
 
     backgroundImage() {
-      return (
-        process.env.BASE_URL + "media/svg/illustrations/login-visual-1.svg"
-      );
+      return process.env.BASE_URL + "media/bg/background-signin.png";
     },
   },
   mounted() {
