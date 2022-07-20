@@ -125,8 +125,8 @@
             <h6 class="mb-0">Services</h6>
           </template>
           <b-form-checkbox
-            v-for="(service, index) in optionServices"
-            :key="index"
+            v-for="(service, optionServiceIndex) in optionServices"
+            :key="optionServiceIndex"
             :value="service.value"
             v-model="selectedServices"
           >
@@ -139,7 +139,11 @@
           <template v-slot:header>
             <h6 class="mb-0">Kontak PIC</h6>
           </template>
-          <div class="row" v-for="(list, index) in listKontakPIC" :key="index">
+          <div
+            class="row"
+            v-for="(list, listKOntakPICIndex) in listKontakPIC"
+            :key="listKOntakPICIndex"
+          >
             <div class="col-md-5">
               <div class="mb-4">
                 <h6 class="mb-1">Nama PIC</h6>
@@ -160,11 +164,11 @@
             </div>
             <div class="col-md-2">
               <b-button
-                v-if="listKontakPIC.length !== index + 1"
+                v-if="listKontakPIC.length !== listKOntakPICIndex + 1"
                 variant="danger"
                 class="w-100"
                 style="margin-top: 21px"
-                @click="handleDeletePic(index)"
+                @click="handleDeletePic(listKOntakPICIndex)"
                 >Delete</b-button
               >
               <b-button
@@ -182,7 +186,7 @@
     </div>
     <div class="row gutter-b">
       <div class="col-12">
-        <b-card header-tag="header" footer-tag="footer" class="gutter-b">
+        <b-card header-tag="header" footer-tag="footer">
           <template v-slot:header>
             <h6 class="mb-0">Jadwal & Shift</h6>
             <span class="text-danger"
@@ -238,6 +242,99 @@
                 @click="handleAddShift()"
                 >Add</b-button
               >
+            </div>
+          </div>
+        </b-card>
+      </div>
+    </div>
+    <div class="row gutter-b">
+      <div class="col-12">
+        <b-card header-tag="header" footer-tag="footer" class="gutter-b">
+          <template v-slot:header>
+            <h6 class="mb-0">Radius Absen</h6>
+          </template>
+          <div class="row m-0">
+            <div class="col-md-6 p-0">
+              <GmapMap
+                :center="center"
+                :zoom="zoomMap"
+                map-type-id="terrain"
+                style="width: 500px; height: 312px"
+              >
+                <GmapCircle
+                  v-for="(pin, indexCircle) in markers"
+                  :key="indexCircle + 'a'"
+                  :center="pin.position"
+                  :radius="radiusMap"
+                  :visible="false"
+                  :options="{
+                    fillColor: 'red',
+                    fillOpacity: 0.2,
+                    strokeColor: '#3151E2',
+                    strokeWeight: 2,
+                  }"
+                ></GmapCircle>
+                <GmapMarker
+                  v-for="(m, indexMarker) in markers"
+                  :key="indexMarker"
+                  :position="m.position"
+                  :clickable="true"
+                  :draggable="false"
+                  :options="{
+                    url: 'require(@/public/media/custom/Vector.png)',
+                  }"
+                />
+              </GmapMap>
+            </div>
+            <div class="col-md-6 p-0">
+              <div class="mb-6">
+                <h6 class="mb-1">Alamat</h6>
+                <gmap-autocomplete
+                  class="form-control"
+                  :value="description"
+                  @place_changed="setPlace"
+                  :select-first-on-enter="true"
+                  :options="{
+                    componentRestrictions: { country: ['id'] },
+                  }"
+                >
+                </gmap-autocomplete>
+              </div>
+              <div class="mb-6">
+                <h6 class="mb-1">Radius</h6>
+                <div class="row m-0">
+                  <div class="col-md-10 p-0 align-self-center">
+                    <vue-slider
+                      v-model="radiusMap"
+                      :min="100"
+                      :max="1000"
+                      :interval="50"
+                    ></vue-slider>
+                  </div>
+                  <div class="col-md-2">
+                    <input class="form-control" v-model="radiusMap" disabled />
+                  </div>
+                </div>
+              </div>
+              <div class="row mb-6">
+                <div class="col-md-4">
+                  <h6 class="mb-1">Pembatasan</h6>
+                </div>
+                <div class="col-md-4">
+                  <b-form-checkbox size="lg" v-model="isRadiusCheckin"
+                    >Check in</b-form-checkbox
+                  >
+                </div>
+                <div class="col-md-4">
+                  <b-form-checkbox size="lg" v-model="isRadiusCheckout">
+                    Check out</b-form-checkbox
+                  >
+                </div>
+              </div>
+              <v-alert border="top" colored-border type="info" elevation="2">
+                Jika anda melakukan pembatasan, karyawan yang absen diluar
+                radius tidak akan bisa absen.
+              </v-alert>
             </div>
           </div>
         </b-card>
@@ -357,6 +454,21 @@ export default {
           end: "",
         },
       ],
+      isRadiusCheckin: true,
+      isRadiusCheckout: true,
+      // MAPS
+      markers: [],
+      center: {
+        lat: -6.209044569159681,
+        lng: 106.84463747406414,
+      },
+      location: {},
+      place: null,
+      description: "",
+      latLng: {},
+      addressMap: "",
+      zoomMap: 10,
+      radiusMap: 200,
     };
   },
   components: {},
@@ -396,6 +508,33 @@ export default {
         start: "",
         end: "",
       });
+    },
+    // MAPS
+    setDescription(description) {
+      this.description = description;
+    },
+    setPlace(place) {
+      if (!place) return;
+      this.description = place.formatted_address;
+      this.zoomMap = 15;
+      this.center = {
+        lat: place.geometry.location.lat(),
+        lng: place.geometry.location.lng(),
+      };
+      if (this.markers.length)
+        this.markers.splice(0, 1, {
+          position: {
+            lat: place.geometry.location.lat(),
+            lng: place.geometry.location.lng(),
+          },
+        });
+      else
+        this.markers.push({
+          position: {
+            lat: place.geometry.location.lat(),
+            lng: place.geometry.location.lng(),
+          },
+        });
     },
   },
 };

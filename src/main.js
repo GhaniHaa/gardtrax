@@ -20,8 +20,11 @@ import ClipboardJS from "clipboard";
 window.ClipboardJS = ClipboardJS;
 
 // Vue 3rd party plugins
+import * as VueGoogleMaps from "vue2-google-maps";
 import i18n from "@/core/plugins/vue-i18n";
 import vuetify from "@/core/plugins/vuetify";
+import VueSlider from "vue-slider-component";
+import "vue-slider-component/theme/default.css";
 import "@/core/plugins/portal-vue";
 import "@/core/plugins/bootstrap-vue";
 import "@/core/plugins/perfect-scrollbar";
@@ -53,7 +56,33 @@ router.beforeEach((to, from, next) => {
 });
 
 Vue.use(VueEasytable);
+Vue.component("VueSlider", VueSlider);
+Vue.use(VueGoogleMaps, {
+  load: {
+    // key: "AIzaSyBqNgUH2b3f59YJkPHtInk7sRiwJw1FQck",
+    key: "AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg",
+    libraries: "places", // This is required if you use the Autocomplete plugin
+    // OR: libraries: 'places,drawing'
+    // OR: libraries: 'places,drawing,visualization'
+    // (as you require)
 
+    //// If you want to set the version, you can do so:
+    // v: '3.26',
+    region: "ID",
+    language: "id",
+  },
+  //// If you intend to programmatically custom event listener code
+  //// (e.g. `this.$refs.gmap.$on('zoom_changed', someFunc)`)
+  //// instead of going through Vue templates (e.g. `<GmapMap @zoom_changed="someFunc">`)
+  //// you might need to turn this on.
+  // autobindAllEvents: false,
+
+  //// If you want to manually install components, e.g.
+  //// import {GmapMarker} from 'vue2-google-maps/src/components/marker'
+  //// Vue.component('GmapMarker', GmapMarker)
+  //// then disable the following:
+  // installComponents: true,
+});
 new Vue({
   router,
   store,

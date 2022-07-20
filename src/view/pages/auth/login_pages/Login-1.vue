@@ -321,9 +321,7 @@ export default {
     ...mapGetters(["currentUser"]),
 
     backgroundImage() {
-      return (
-        process.env.BASE_URL + "media/svg/illustrations/login-visual-1.svg"
-      );
+      return process.env.BASE_URL + "media/bg/background-signin.png";
     },
   },
   mounted() {
